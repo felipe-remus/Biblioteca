@@ -6,11 +6,15 @@ package view;
 
 import java.awt.event.KeyEvent;
 import javax.swing.JDesktopPane;
+import javax.swing.JOptionPane;
+import javax.swing.event.InternalFrameAdapter;
 import javax.swing.event.InternalFrameEvent;
 import javax.swing.event.InternalFrameListener;
 import model.ClienteVO;
 import model.LivroVO;
+import model.LoginVO;
 import model.ReservaVO;
+import util.SessaoUsuario;
 import view.GUICliente;
 import view.GUIDevolucao;
 import view.GUIEditora;
@@ -38,8 +42,8 @@ public class GUIMenuPrincipal extends javax.swing.JFrame implements InternalFram
     private boolean flagGUIReserva = false;
     private boolean flagGUIDevolucao = false;
     
-    private boolean flagGUICadLogin = false;
-       
+    private boolean flagGUICadManuLogin = false;
+    private boolean flagMeusDados = false;  
     
     /**
      * Creates new form MenuPrincipal
@@ -264,7 +268,7 @@ public class GUIMenuPrincipal extends javax.swing.JFrame implements InternalFram
     
     private void abrirGUIFuncionario(){
         if(!flagGUIFuncionario){
-            GUIFuncionario gcf = new GUIFuncionario();
+            GUIFuncionario gcf = new GUIFuncionario(this);
             jdpAreaDeTrabalho.add(gcf);
             gcf.setVisible(true);
             flagGUIFuncionario = true;
@@ -341,13 +345,48 @@ public class GUIMenuPrincipal extends javax.swing.JFrame implements InternalFram
         }       
     }
     
-    public void abrirGUICadLogin(){
-        if(!flagGUICadLogin){
-            GUICadLogin gcl = new GUICadLogin();
+    public void abrirGUICadManuLogin(){
+        if(!flagGUICadManuLogin){
+            GUICadManuLogin gcl = new GUICadManuLogin(this);
             jdpAreaDeTrabalho.add(gcl);
             gcl.setVisible(true);
-            flagGUICadLogin = true;
+            flagGUICadManuLogin = true;
             gcl.addInternalFrameListener(this);
+        }
+    }
+    
+    // Para "Meus Dados" (alterar próprios dados)
+    private void abrirMeusDados() {
+        if (!flagMeusDados) {
+            LoginVO usuario = SessaoUsuario.getUsuarioLogado();
+            if (usuario != null) {
+                GUICadManuLogin guiLogin = new GUICadManuLogin(this, usuario);
+                jdpAreaDeTrabalho.add(guiLogin);
+                guiLogin.setVisible(true);
+                flagMeusDados = true;
+                guiLogin.addInternalFrameListener(new InternalFrameAdapter() {
+                });
+            }
+        }
+    }
+    
+    // Para "Cadastro de Login" (só admin)
+    private void abrirCadastroLogin() {
+        if (SessaoUsuario.isAdministrador()) {
+            if (!flagGUICadManuLogin) {
+                GUICadManuLogin guiLogin = new GUICadManuLogin(this);
+                jdpAreaDeTrabalho.add(guiLogin);
+                guiLogin.setVisible(true);
+                flagGUICadManuLogin = true;
+                guiLogin.addInternalFrameListener(new InternalFrameAdapter() {
+                    @Override
+                    public void internalFrameClosed(InternalFrameEvent e) {
+                        flagGUICadManuLogin = false;
+                    }
+                });
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Apenas administradores podem acessar esta função!");
         }
     }
     
@@ -442,12 +481,12 @@ public class GUIMenuPrincipal extends javax.swing.JFrame implements InternalFram
     }//GEN-LAST:event_jniEditoraKeyPressed
 
     private void jniLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jniLoginActionPerformed
-        abrirGUICadLogin();
+        abrirGUICadManuLogin();
     }//GEN-LAST:event_jniLoginActionPerformed
 
     private void jniLoginKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jniLoginKeyPressed
         if(evt.getKeyCode() == KeyEvent.VK_ENTER){
-            abrirGUICadLogin();
+            abrirGUICadManuLogin();
         }
     }//GEN-LAST:event_jniLoginKeyPressed
 
@@ -539,8 +578,10 @@ public class GUIMenuPrincipal extends javax.swing.JFrame implements InternalFram
             flagGUIEmprestimo = false;
         }else if(e.getInternalFrame() instanceof GUIReserva){
             flagGUIReserva = false;
-        }else if(e.getInternalFrame() instanceof GUICadLogin){
-            flagGUICadLogin = false;
+        }else if(e.getInternalFrame() instanceof GUICadManuLogin){
+            flagGUICadManuLogin = false;
+        }else if(e.getInternalFrame() instanceof GUICadManuLogin){
+            flagMeusDados = false;
         }
     }
 

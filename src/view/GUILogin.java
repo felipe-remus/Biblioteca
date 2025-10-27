@@ -4,11 +4,14 @@ import view.GUIMenuPrincipal;
 import java.sql.ResultSet;
 import dao.LoginDAO;
 import java.awt.event.KeyEvent;
+import java.util.List;
+import java.util.Map;
 import java.util.Vector;
 import javax.swing.JOptionPane;
 
 import model.LoginVO;
 import services.LoginServicos;
+import util.SessaoUsuario;
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
@@ -181,47 +184,116 @@ public class GUILogin extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void logar (){
-        try {
-            LoginVO lVO = new LoginVO();
+    private void logar() {
+    try {
+        LoginVO lVO = new LoginVO();
+        LoginServicos ls = services.ServicosFactory.getLoginServicos();
+
+        String loginDigitado = jtfLogin.getText().trim();
+        String senhaDigitada = jpfSenha.getText().trim();
+        String perfilSelecionado = (String) jcbPerfil.getSelectedItem();
+        
+        lVO.setLogin(loginDigitado);
+        lVO.setSenha(senhaDigitada);
+        Integer idPerfil = ls.getPerfil(perfilSelecionado);
+        lVO.setPerfil(idPerfil);
+
+        // ✅ Verificação detalhada passo a passo
+        boolean loginExiste = false;
+        boolean senhaCorreta = false;
+        boolean perfilCorreto = false;
+
+        // 1. Verificar se o login existe
+        LoginVO loginNoBanco = ls.buscarLoginPorLogin(loginDigitado);
+        if (loginNoBanco != null) {
+            loginExiste = true;
             
-            LoginServicos ls = services.ServicosFactory.getLoginServicos();
-            
-            lVO.setLogin(jtfLogin.getText());
-            lVO.setSenha(jpfSenha.getText());
-            lVO.setPerfil(ls.getPerfil((String) jcbPerfil.getSelectedItem()));
-            //LoginDAO lDAO= new LoginDAO();
-            //ResultSet rs = lDAO.autenticarLogin(lVO);
-            ResultSet rs = ls.autenticarLogin(lVO);
-            
-            if(rs.next()){
-                GUIMenuPrincipal gmp =new GUIMenuPrincipal();
-                gmp.setVisible(true);
+            // 2. Verificar se a senha está correta
+            if (ls.validarSenha(loginNoBanco.getIdLogin(), senhaDigitada)) {
+                senhaCorreta = true;
                 
+                // 3. Verificar se o perfil está correto
+                if (loginNoBanco.getPerfil() == idPerfil) {
+                    perfilCorreto = true;
+                }
+            }
+        }
+
+        if (loginExiste && senhaCorreta && perfilCorreto) {
+            // ✅ Autenticação completa - usar o método autenticarLogin
+            LoginVO usuarioAutenticado = ls.autenticarLogin(lVO);
+            if (usuarioAutenticado != null) {
+                SessaoUsuario.setUsuarioLogado(usuarioAutenticado);
+                GUIMenuPrincipal gmp = new GUIMenuPrincipal();
+                gmp.setVisible(true);
                 dispose();
-            }else{
-                JOptionPane.showMessageDialog(null,"Login e/ou senha e/ou perfil inválidos! ");
+            }
+        } else {
+            // ❌ Mensagem detalhada do que está errado
+            StringBuilder mensagemErro = new StringBuilder("Erro de autenticação:\n");
+            
+            if (!loginExiste) {
+                mensagemErro.append("• Login não encontrado\n");
+            }
+            if (loginExiste && !senhaCorreta) {
+                mensagemErro.append("• Senha incorreta\n");
+            }
+            if (loginExiste && senhaCorreta && !perfilCorreto) {
+                mensagemErro.append("• Perfil incorreto\n");
+            }
+            
+            JOptionPane.showMessageDialog(null, mensagemErro.toString(), 
+                "Erro de Autenticação", JOptionPane.ERROR_MESSAGE);
+        }
+        
+    } catch (Exception e) {
+        JOptionPane.showMessageDialog(null, "Erro! GUILogin: " + e.getMessage(),
+                "Erro", JOptionPane.ERROR_MESSAGE);
+    }
+}
+//    private void logar() {
+//        try {
+//            LoginVO lVO = new LoginVO();
+//            LoginServicos ls = services.ServicosFactory.getLoginServicos();
+//
+//            lVO.setLogin(jtfLogin.getText().trim());
+//            lVO.setSenha(jpfSenha.getText().trim());
+//            lVO.setPerfil(ls.getPerfil((String) jcbPerfil.getSelectedItem()));
+//
+//            // ✅ Agora retorna LoginVO, não ResultSet
+//            LoginVO usuarioAutenticado = ls.autenticarLogin(lVO);
+//
+//            if (usuarioAutenticado != null) {
+//                SessaoUsuario.setUsuarioLogado(usuarioAutenticado);
+//                GUIMenuPrincipal gmp = new GUIMenuPrincipal();
+//                gmp.setVisible(true);
+//                dispose();
+//            } else {
+//                JOptionPane.showMessageDialog(null, "Login e/ou senha e/ou perfil inválidos!");
+//            }
+//        } catch (Exception e) {
+//            JOptionPane.showMessageDialog(null, "Erro! GUILogin: " + e.getMessage(),
+//                    "Erro", JOptionPane.ERROR_MESSAGE);
+//        }
+//    }
+    
+    private void restaurarPerfilComboBox() {
+        try {
+            LoginServicos ls = services.ServicosFactory.getLoginServicos();
+            List<Map<String, Object>> perfis = ls.listaPerfil();
+
+            jcbPerfil.removeAllItems();
+            codperfil.clear();
+
+            for (Map<String, Object> perfil : perfis) {
+                codperfil.addElement((Integer) perfil.get("id"));
+                jcbPerfil.addItem((String) perfil.get("nome"));
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null,"Erro! GUILogin" + e.getMessage(),
-                    "Erro",
-                    JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Erro ao carregar perfis: " + e.getMessage());
         }
     }
     
-    public void restaurarPerfilComboBox(){
-        try {
-            LoginServicos ls = services.ServicosFactory.getLoginServicos();
-            ResultSet rs = ls.listaPerfil();
-            
-            while(rs.next()){
-                codperfil.addElement(rs.getInt(1));
-                jcbPerfil.addItem(rs.getString(2));
-            }
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Erro GUILogin.restaurarPerfilComboBox" +e.getMessage());
-        }
-    }
     private void jtfLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtfLoginActionPerformed
         
     }//GEN-LAST:event_jtfLoginActionPerformed

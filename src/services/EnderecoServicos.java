@@ -19,7 +19,7 @@ public class EnderecoServicos {
         eDAO.cadastrarEndereco(eVO);
     }
     
-    public int getidTelefone(EnderecoVO eVO) throws SQLException{
+    public int getidEndereco(EnderecoVO eVO) throws SQLException{
         EnderecoDAO eDAO = DAOFactory.getEnderecoDAO();
         return eDAO.getIdEndereco(eVO);
     }

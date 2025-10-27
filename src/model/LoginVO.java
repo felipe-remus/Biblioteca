@@ -10,6 +10,19 @@ package model;
  */
 public class LoginVO {
     private int idLogin, perfil;
+    private String login, senha;
+    
+    // ✅ Campo para controle de sessão
+    private boolean autenticado = false;
+    
+    // Getters e Setters
+    public int getIdLogin() {
+        return idLogin;
+    }
+
+    public void setIdLogin(int idLogin) {
+        this.idLogin = idLogin;
+    }
 
     public int getPerfil() {
         return perfil;
@@ -17,15 +30,6 @@ public class LoginVO {
 
     public void setPerfil(int perfil) {
         this.perfil = perfil;
-    }
-    private String login, senha;
-
-    public int getIdLogin() {
-        return idLogin;
-    }
-
-    public void setIdLogin(int idLogin) {
-        this.idLogin = idLogin;
     }
 
     public String getLogin() {
@@ -44,5 +48,12 @@ public class LoginVO {
         this.senha = senha;
     }
     
+    // ✅ Novos métodos para autenticação
+    public boolean isAutenticado() {
+        return autenticado;
+    }
     
+    public void setAutenticado(boolean autenticado) {
+        this.autenticado = autenticado;
+    }
 }

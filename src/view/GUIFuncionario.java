@@ -7,6 +7,7 @@ package view;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.JDesktopPane;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import model.EnderecoVO;
@@ -15,6 +16,7 @@ import model.TelefoneVO;
 import services.EnderecoServicos;
 import services.FuncionarioServicos;
 import services.TelefoneServicos;
+import util.SessaoUsuario;
 
 /**
  *
@@ -23,6 +25,8 @@ import services.TelefoneServicos;
 public class GUIFuncionario extends javax.swing.JInternalFrame {
     private List<Integer> idsFuncionarios = new ArrayList<>();
     private int idFuncionarioEmEdicao = -1;
+    
+    private GUIMenuPrincipal menuPrincipal;
     
     DefaultTableModel dtm = new DefaultTableModel(
             new Object [][]{},
@@ -39,7 +43,11 @@ public class GUIFuncionario extends javax.swing.JInternalFrame {
         
         jbtnAlterar.setEnabled(false);
     }
-
+    
+    public GUIFuncionario(GUIMenuPrincipal menu) {
+        this();
+        this.menuPrincipal = menu;
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -408,8 +416,35 @@ public class GUIFuncionario extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    // Método para abrir cadastro de login após cadastrar funcionário
+    private void abrirTelaCadastroLogin(String emailFuncionario) {
+        try {
+            if (menuPrincipal == null) {
+                JOptionPane.showMessageDialog(this, "Erro: Menu principal não disponível.");
+                return;
+            }
+
+            boolean usuarioLogadoEhAdmin = SessaoUsuario.isAdministrador();
+            GUICadManuLogin guiLogin = new GUICadManuLogin(menuPrincipal, emailFuncionario, usuarioLogadoEhAdmin);
+
+            JDesktopPane desktop = menuPrincipal.getDesktop();
+            desktop.add(guiLogin);
+            guiLogin.setVisible(true);
+            guiLogin.toFront();
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Erro ao abrir cadastro de login: " + e.getMessage());
+        }
+    }
+
     private void cadastrarFuncionario() {
         try {
+            String emailFuncionario = jtfEmail.getText().trim();
+            if (emailFuncionario.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Informe o e-mail do funcionário!");
+                return;
+            }
+            
             // Telefone
             TelefoneVO tVO = new TelefoneVO();
             tVO.setFone(jtfTelefone.getText());
@@ -427,16 +462,18 @@ public class GUIFuncionario extends javax.swing.JInternalFrame {
             eVO.setCep(jtfCEP.getText());
             EnderecoServicos es = services.ServicosFactory.getEnderecoServicos();
             es.cadadtrarEndereco(eVO);
-            int id_endereco = es.getidTelefone(eVO);
+            int id_endereco = es.getidEndereco(eVO);
 
             // Funcionário
             FuncionarioVO fVO = new FuncionarioVO();
             fVO.setNome_funcionario(jtfNome.getText());
-            fVO.setEmail_funcionario(jtfEmail.getText());
+            fVO.setEmail_funcionario(emailFuncionario);
             FuncionarioServicos fs = services.ServicosFactory.getFuncionarioServicos();
             fs.cadastrarFuncionario(fVO, id_fone, id_endereco);
 
             JOptionPane.showMessageDialog(null, "Funcionário cadastrado com sucesso!");
+            
+            abrirTelaCadastroLogin(emailFuncionario);
             
             limpar();
             preencherTabela();

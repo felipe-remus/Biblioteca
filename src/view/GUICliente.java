@@ -426,7 +426,7 @@ public class GUICliente extends javax.swing.JInternalFrame {
             eVO.setRua(jtfRua.getText());
             EnderecoServicos es = services.ServicosFactory.getEnderecoServicos();
             es.cadadtrarEndereco(eVO);
-            int id_endereco = es.getidTelefone(eVO);
+            int id_endereco = es.getidEndereco(eVO);
             
             // === Cliente ===
             ClienteVO cVO = new ClienteVO();
