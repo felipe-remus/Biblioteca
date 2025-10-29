@@ -125,4 +125,51 @@ public class FuncionarioDAO {
             con.close();
         }
     }
+    
+    public Integer buscarIdLoginPorEmail(String email) throws SQLException {
+        Connection con = new ConexaoBanco().getConexao();
+        try {
+            String sql = """
+                SELECT l.id_login 
+                FROM login l
+                INNER JOIN funcionario f ON l.login = f.email_funcionario
+                WHERE f.email_funcionario = ?
+                """;
+            PreparedStatement pstm = con.prepareStatement(sql);
+            pstm.setString(1, email);
+            ResultSet rs = pstm.executeQuery();
+
+            if (rs.next()) {
+                return rs.getInt("id_login");
+            }
+            return null;
+        } finally {
+            con.close();
+        }
+    }
+
+    public void atualizarLoginPorEmail(String emailAntigo, String emailNovo) throws SQLException {
+        Connection con = new ConexaoBanco().getConexao();
+        try {
+            String sql = "UPDATE login SET login = ? WHERE login = ?";
+            PreparedStatement pstm = con.prepareStatement(sql);
+            pstm.setString(1, emailNovo);
+            pstm.setString(2, emailAntigo);
+            pstm.executeUpdate();
+        } finally {
+            con.close();
+        }
+    }
+
+    public void deletarLoginPorEmail(String email) throws SQLException {
+        Connection con = new ConexaoBanco().getConexao();
+        try {
+            String sql = "DELETE FROM login WHERE login = ?";
+            PreparedStatement pstm = con.prepareStatement(sql);
+            pstm.setString(1, email);
+            pstm.executeUpdate();
+        } finally {
+            con.close();
+        }
+    }
 }

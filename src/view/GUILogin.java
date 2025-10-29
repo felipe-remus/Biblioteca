@@ -31,6 +31,8 @@ public class GUILogin extends javax.swing.JFrame {
         initComponents();
         
         restaurarPerfilComboBox();
+        
+        setExtendedState(MAXIMIZED_BOTH);
     }
 
     /**
@@ -185,97 +187,32 @@ public class GUILogin extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void logar() {
-    try {
-        LoginVO lVO = new LoginVO();
-        LoginServicos ls = services.ServicosFactory.getLoginServicos();
+        try {
+            LoginVO lVO = new LoginVO();
+            LoginServicos ls = services.ServicosFactory.getLoginServicos();
 
-        String loginDigitado = jtfLogin.getText().trim();
-        String senhaDigitada = jpfSenha.getText().trim();
-        String perfilSelecionado = (String) jcbPerfil.getSelectedItem();
-        
-        lVO.setLogin(loginDigitado);
-        lVO.setSenha(senhaDigitada);
-        Integer idPerfil = ls.getPerfil(perfilSelecionado);
-        lVO.setPerfil(idPerfil);
+            lVO.setLogin(jtfLogin.getText().trim());
+            lVO.setSenha(jpfSenha.getText().trim());
+            lVO.setPerfil(ls.getPerfil((String) jcbPerfil.getSelectedItem()));
 
-        // ✅ Verificação detalhada passo a passo
-        boolean loginExiste = false;
-        boolean senhaCorreta = false;
-        boolean perfilCorreto = false;
-
-        // 1. Verificar se o login existe
-        LoginVO loginNoBanco = ls.buscarLoginPorLogin(loginDigitado);
-        if (loginNoBanco != null) {
-            loginExiste = true;
-            
-            // 2. Verificar se a senha está correta
-            if (ls.validarSenha(loginNoBanco.getIdLogin(), senhaDigitada)) {
-                senhaCorreta = true;
-                
-                // 3. Verificar se o perfil está correto
-                if (loginNoBanco.getPerfil() == idPerfil) {
-                    perfilCorreto = true;
-                }
-            }
-        }
-
-        if (loginExiste && senhaCorreta && perfilCorreto) {
-            // ✅ Autenticação completa - usar o método autenticarLogin
             LoginVO usuarioAutenticado = ls.autenticarLogin(lVO);
+
             if (usuarioAutenticado != null) {
                 SessaoUsuario.setUsuarioLogado(usuarioAutenticado);
                 GUIMenuPrincipal gmp = new GUIMenuPrincipal();
                 gmp.setVisible(true);
                 dispose();
+            } else {
+                // 🔒 Mensagem genérica de segurança
+                JOptionPane.showMessageDialog(null, "Login, senha ou perfil inválidos.", 
+                    "Erro de Autenticação", JOptionPane.ERROR_MESSAGE);
             }
-        } else {
-            // ❌ Mensagem detalhada do que está errado
-            StringBuilder mensagemErro = new StringBuilder("Erro de autenticação:\n");
-            
-            if (!loginExiste) {
-                mensagemErro.append("• Login não encontrado\n");
-            }
-            if (loginExiste && !senhaCorreta) {
-                mensagemErro.append("• Senha incorreta\n");
-            }
-            if (loginExiste && senhaCorreta && !perfilCorreto) {
-                mensagemErro.append("• Perfil incorreto\n");
-            }
-            
-            JOptionPane.showMessageDialog(null, mensagemErro.toString(), 
+        } catch (Exception e) {
+            // 🔒 Também usa mensagem genérica em caso de erro
+            JOptionPane.showMessageDialog(null, "Login, senha ou perfil inválidos.", 
                 "Erro de Autenticação", JOptionPane.ERROR_MESSAGE);
         }
-        
-    } catch (Exception e) {
-        JOptionPane.showMessageDialog(null, "Erro! GUILogin: " + e.getMessage(),
-                "Erro", JOptionPane.ERROR_MESSAGE);
     }
-}
-//    private void logar() {
-//        try {
-//            LoginVO lVO = new LoginVO();
-//            LoginServicos ls = services.ServicosFactory.getLoginServicos();
-//
-//            lVO.setLogin(jtfLogin.getText().trim());
-//            lVO.setSenha(jpfSenha.getText().trim());
-//            lVO.setPerfil(ls.getPerfil((String) jcbPerfil.getSelectedItem()));
-//
-//            // ✅ Agora retorna LoginVO, não ResultSet
-//            LoginVO usuarioAutenticado = ls.autenticarLogin(lVO);
-//
-//            if (usuarioAutenticado != null) {
-//                SessaoUsuario.setUsuarioLogado(usuarioAutenticado);
-//                GUIMenuPrincipal gmp = new GUIMenuPrincipal();
-//                gmp.setVisible(true);
-//                dispose();
-//            } else {
-//                JOptionPane.showMessageDialog(null, "Login e/ou senha e/ou perfil inválidos!");
-//            }
-//        } catch (Exception e) {
-//            JOptionPane.showMessageDialog(null, "Erro! GUILogin: " + e.getMessage(),
-//                    "Erro", JOptionPane.ERROR_MESSAGE);
-//        }
-//    }
     
     private void restaurarPerfilComboBox() {
         try {

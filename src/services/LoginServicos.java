@@ -7,6 +7,7 @@ import dao.DAOFactory;
 import dao.LoginDAO;
 import java.sql.SQLException;
 import java.sql.ResultSet;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import model.LoginVO;
@@ -45,12 +46,36 @@ public class LoginServicos {
     }
     
     public void atualizarLogin(int idLogin, String login, String senha, int perfil) throws SQLException {
+        if (senha == null || senha.trim().isEmpty()) {
+            throw new IllegalArgumentException("Senha não pode ser nula ou vazia");
+        }
+
         LoginDAO lDAO = DAOFactory.getLoginDAO();
         lDAO.atualizarLogin(idLogin, login, senha, perfil);
+    }
+    
+    public void atualizarPerfil(int idLogin, int novoPerfil) throws SQLException {
+        LoginDAO lDAO = DAOFactory.getLoginDAO();
+        lDAO.atualizarPerfil(idLogin, novoPerfil);
     }
     
     public LoginVO buscarLoginPorId(int idLogin) throws SQLException {
         LoginDAO lDAO = DAOFactory.getLoginDAO();
         return lDAO.buscarLoginPorId(idLogin);
+    }
+    
+    public ArrayList<LoginVO> buscarTodosLogins() throws SQLException {
+        LoginDAO lDAO = DAOFactory.getLoginDAO();
+        return lDAO.buscarTodosLogins();
+    }
+
+    public void deletarLogin(int idLogin) throws SQLException {
+        LoginDAO lDAO = DAOFactory.getLoginDAO();
+        lDAO.deletarLogin(idLogin);
+    }
+    
+    public ArrayList<LoginVO> filtrarLoginsPorLogin(String termo) throws SQLException {
+        LoginDAO lDAO = DAOFactory.getLoginDAO();
+        return lDAO.filtrarLoginsPorLogin(termo);
     }
 }

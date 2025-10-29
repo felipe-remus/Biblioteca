@@ -40,42 +40,50 @@ public class FuncionarioServicos {
         return fDAO.buscarFuncionarioPorId(id_funcionario);
     }
 
-    public void deletarFuncionario(int id_funcionario) throws SQLException {
+    public void deletarFuncionario(int idFuncionario) throws SQLException {
         FuncionarioDAO fDAO = DAOFactory.getFuncionarioDAO();
-        
-        // Busca IDs de fone/endereco antes de deletar
-        FuncionarioVO funcionario = fDAO.buscarFuncionarioPorId(id_funcionario);
-        int id_fone = (int) funcionario.getId_fone();
-        int id_endereco = (int) funcionario.getId_endereco();
-        
-        // Deleta funcionário
-        fDAO.deletarFuncionario(id_funcionario);
-        
-        // Deleta telefone e endereço
-        TelefoneDAO tDAO = DAOFactory.getTelefoneDAO();
-        tDAO.deletarTelefone(id_fone);
-        
-        EnderecoDAO eDAO = DAOFactory.getEnderecoDAO();
-        eDAO.deletarEndereco(id_endereco);
-    }
 
+        // Buscar email do funcionário antes de deletar
+        FuncionarioVO funcionario = fDAO.buscarFuncionarioPorId(idFuncionario);
+        String email = funcionario.getEmail_funcionario();
+
+        // Deletar funcionário
+        fDAO.deletarFuncionario(idFuncionario);
+
+        // Deletar login associado
+        fDAO.deletarLoginPorEmail(email);
+    }
     public void confirmarAlteracao(
         FuncionarioVO fVO,
         TelefoneVO tVO,
         EnderecoVO eVO,
         int id_funcionario
     ) throws SQLException {
+
+        // 1. Buscar funcionário atual para comparar email
         FuncionarioDAO fDAO = DAOFactory.getFuncionarioDAO();
+        FuncionarioVO funcionarioAntigo = fDAO.buscarFuncionarioPorId(id_funcionario);
+        String emailAntigo = funcionarioAntigo.getEmail_funcionario();
+        String emailNovo = fVO.getEmail_funcionario();
+
+        // 2. Atualizar funcionário
         fDAO.confirmarAlteracao(fVO, id_funcionario);
-        
+
+        // 3. Atualizar telefone e endereço
         FuncionarioVO funcAtual = fDAO.buscarFuncionarioPorId(id_funcionario);
-        int id_fone = (int) funcAtual.getId_fone();
-        int id_endereco = (int) funcAtual.getId_endereco();
-        
+        int id_fone = funcAtual.getId_fone();
+        int id_endereco = funcAtual.getId_endereco();
+
         TelefoneDAO tDAO = DAOFactory.getTelefoneDAO();
         tDAO.atualizarTelefone(tVO, id_fone);
-        
+
         EnderecoDAO eDAO = DAOFactory.getEnderecoDAO();
         eDAO.atualizarEndereco(eVO, id_endereco);
+
+        // 4. ✅ Atualizar login se email mudou
+        if (!emailAntigo.equals(emailNovo)) {
+            // Atualiza o login para o novo email
+            fDAO.atualizarLoginPorEmail(emailAntigo, emailNovo);
+        }
     }
 }

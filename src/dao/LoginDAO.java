@@ -21,8 +21,6 @@ import util.Criptografar;
 import view.GUIMenuPrincipal;
 
 public class LoginDAO {
-    Connection con;
-    
     public LoginVO autenticarLogin(LoginVO lVO) throws SQLException {
         Connection con = new ConexaoBanco().getConexao();
         try {
@@ -73,7 +71,7 @@ public class LoginDAO {
     }
     
     public Integer getPerfil(String nomeperfil) throws SQLException {
-        con = new ConexaoBanco().getConexao();
+        Connection con = new ConexaoBanco().getConexao();
         try {
             String sql = "SELECT id_perfil FROM perfil WHERE nome_perfil = ?";
             PreparedStatement pstm = con.prepareStatement(sql);
@@ -135,23 +133,41 @@ public class LoginDAO {
     public void atualizarLogin(int idLogin, String login, String senha, int perfil) throws SQLException {
         Connection con = new ConexaoBanco().getConexao();
         try {
+            // Verificar se a senha é nula ou vazia
+            if (senha == null || senha.trim().isEmpty()) {
+                throw new SQLException("Senha não pode ser nula ou vazia");
+            }
+
             // Verificar duplicidade (exceto para o próprio usuário)
             String checkSql = "SELECT id_login FROM login WHERE login = ? AND id_login != ?";
             PreparedStatement checkPstm = con.prepareStatement(checkSql);
             checkPstm.setString(1, login);
             checkPstm.setInt(2, idLogin);
             ResultSet rs = checkPstm.executeQuery();
-            
+
             if (rs.next()) {
                 throw new SQLException("Login já existe");
             }
-            
+
             String sql = "UPDATE login SET login = ?, senha = ?, perfil = ? WHERE id_login = ?";
             PreparedStatement pstm = con.prepareStatement(sql);
             pstm.setString(1, login);
-            pstm.setString(2, new Criptografar().CriptografarSenha(senha));
+            pstm.setString(2, new Criptografar().CriptografarSenha(senha)); // ← agora senha não é null
             pstm.setInt(3, perfil);
             pstm.setInt(4, idLogin);
+            pstm.executeUpdate();
+        } finally {
+            con.close();
+        }
+    }
+    
+    public void atualizarPerfil(int idLogin, int novoPerfil) throws SQLException {
+        Connection con = new ConexaoBanco().getConexao();
+        try {
+            String sql = "UPDATE login SET perfil = ? WHERE id_login = ?";
+            PreparedStatement pstm = con.prepareStatement(sql);
+            pstm.setInt(1, novoPerfil);
+            pstm.setInt(2, idLogin);
             pstm.executeUpdate();
         } finally {
             con.close();
@@ -180,23 +196,83 @@ public class LoginDAO {
     }
     
     public LoginVO buscarLoginPorLogin(String login) throws SQLException {
-    Connection con = new ConexaoBanco().getConexao();
-    try {
-        String sql = "SELECT id_login, login, perfil FROM login WHERE login = ?";
-        PreparedStatement pstm = con.prepareStatement(sql);
-        pstm.setString(1, login);
-        ResultSet rs = pstm.executeQuery();
-        
-        if (rs.next()) {
-            LoginVO lVO = new LoginVO();
-            lVO.setIdLogin(rs.getInt("id_login"));
-            lVO.setLogin(rs.getString("login"));
-            lVO.setPerfil(rs.getInt("perfil"));
-            return lVO;
+        Connection con = new ConexaoBanco().getConexao();
+        try {
+            String sql = "SELECT id_login, login, perfil FROM login WHERE login = ?";
+            PreparedStatement pstm = con.prepareStatement(sql);
+            pstm.setString(1, login);
+            ResultSet rs = pstm.executeQuery();
+
+            if (rs.next()) {
+                LoginVO lVO = new LoginVO();
+                lVO.setIdLogin(rs.getInt("id_login"));
+                lVO.setLogin(rs.getString("login"));
+                lVO.setPerfil(rs.getInt("perfil"));
+                return lVO;
+            }
+            return null;
+        } finally {
+            con.close();
         }
-        return null;
-    } finally {
-        con.close();
     }
-}
+    
+    public ArrayList<LoginVO> buscarTodosLogins() throws SQLException {
+        Connection con = new ConexaoBanco().getConexao();
+        try {
+            con = new ConexaoBanco().getConexao();
+            String sql = "SELECT id_login, login, perfil FROM login ORDER BY login";
+            PreparedStatement pstm = con.prepareStatement(sql);
+            ResultSet rs = pstm.executeQuery();
+
+            ArrayList<LoginVO> logins = new ArrayList<>();
+            while (rs.next()) {
+                LoginVO lVO = new LoginVO();
+                lVO.setIdLogin(rs.getInt("id_login"));
+                lVO.setLogin(rs.getString("login"));
+                lVO.setPerfil(rs.getInt("perfil"));
+                logins.add(lVO);
+            }
+            return logins;
+        } finally {
+            if (con != null) con.close();
+        }
+    }
+
+    public void deletarLogin(int idLogin) throws SQLException {
+        Connection con = new ConexaoBanco().getConexao();
+        try {
+            con = new ConexaoBanco().getConexao();
+            String sql = "DELETE FROM login WHERE id_login = ?";
+            PreparedStatement pstm = con.prepareStatement(sql);
+            pstm.setInt(1, idLogin);
+            pstm.executeUpdate();
+        } finally {
+            if (con != null) con.close();
+        }
+    }
+    
+    public ArrayList<LoginVO> filtrarLoginsPorLogin(String termo) throws SQLException {
+        Connection con = new ConexaoBanco().getConexao();
+        try {
+            con = new ConexaoBanco().getConexao();
+            String sql = "SELECT id_login, login, perfil FROM login WHERE login LIKE ?";
+            PreparedStatement pstm = con.prepareStatement(sql);
+            pstm.setString(1, termo + "%");
+            ResultSet rs = pstm.executeQuery();
+
+            ArrayList<LoginVO> logins = new ArrayList<>();
+            while (rs.next()) {
+                LoginVO lVO = new LoginVO();
+                lVO.setIdLogin(rs.getInt("id_login"));
+                lVO.setLogin(rs.getString("login"));
+                lVO.setPerfil(rs.getInt("perfil"));
+                logins.add(lVO);
+            }
+            return logins;
+        } finally {
+            if (con != null) con.close();
+        }
+    }
+    
+    
 }

@@ -6,7 +6,12 @@ package view;
 
 import java.awt.event.KeyEvent;
 import javax.swing.JDesktopPane;
+import javax.swing.JFrame;
+import javax.swing.JInternalFrame;
+import javax.swing.JMenu;
+import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
+import javax.swing.SwingUtilities;
 import javax.swing.event.InternalFrameAdapter;
 import javax.swing.event.InternalFrameEvent;
 import javax.swing.event.InternalFrameListener;
@@ -50,7 +55,7 @@ public class GUIMenuPrincipal extends javax.swing.JFrame implements InternalFram
      */
     public GUIMenuPrincipal() {
         initComponents();
-        
+
         setExtendedState(MAXIMIZED_BOTH);
     }
     
@@ -64,7 +69,7 @@ public class GUIMenuPrincipal extends javax.swing.JFrame implements InternalFram
     private void initComponents() {
 
         jdpAreaDeTrabalho = new javax.swing.JDesktopPane();
-        jMenuBar1 = new javax.swing.JMenuBar();
+        jmbMenu = new javax.swing.JMenuBar();
         jmCadastro = new javax.swing.JMenu();
         jniCliente = new javax.swing.JMenuItem();
         jniFuncionario = new javax.swing.JMenuItem();
@@ -79,6 +84,7 @@ public class GUIMenuPrincipal extends javax.swing.JFrame implements InternalFram
         jniEmprestimo = new javax.swing.JMenuItem();
         jniReserva = new javax.swing.JMenuItem();
         jniDevolucao = new javax.swing.JMenuItem();
+        jMenu2 = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("NOME BIBLIOTECA");
@@ -189,7 +195,7 @@ public class GUIMenuPrincipal extends javax.swing.JFrame implements InternalFram
         });
         jmCadastro.add(jniLogin);
 
-        jMenuBar1.add(jmCadastro);
+        jmbMenu.add(jmCadastro);
 
         jMenu1.setText("Gerenciamento");
 
@@ -232,9 +238,17 @@ public class GUIMenuPrincipal extends javax.swing.JFrame implements InternalFram
         });
         jMenu1.add(jniDevolucao);
 
-        jMenuBar1.add(jMenu1);
+        jmbMenu.add(jMenu1);
 
-        setJMenuBar(jMenuBar1);
+        jMenu2.setText("Sair");
+        jMenu2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jMenu2MouseClicked(evt);
+            }
+        });
+        jmbMenu.add(jMenu2);
+
+        setJMenuBar(jmbMenu);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -305,6 +319,7 @@ public class GUIMenuPrincipal extends javax.swing.JFrame implements InternalFram
             gcg.addInternalFrameListener(this);
         }
     }
+    
     public void abrirGUIEditora(){
         if(!flagGUIEditora){
             GUIEditora gce = new GUIEditora();
@@ -355,38 +370,39 @@ public class GUIMenuPrincipal extends javax.swing.JFrame implements InternalFram
         }
     }
     
-    // Para "Meus Dados" (alterar próprios dados)
-    private void abrirMeusDados() {
-        if (!flagMeusDados) {
-            LoginVO usuario = SessaoUsuario.getUsuarioLogado();
-            if (usuario != null) {
-                GUICadManuLogin guiLogin = new GUICadManuLogin(this, usuario);
-                jdpAreaDeTrabalho.add(guiLogin);
-                guiLogin.setVisible(true);
-                flagMeusDados = true;
-                guiLogin.addInternalFrameListener(new InternalFrameAdapter() {
-                });
-            }
-        }
-    }
-    
-    // Para "Cadastro de Login" (só admin)
-    private void abrirCadastroLogin() {
-        if (SessaoUsuario.isAdministrador()) {
-            if (!flagGUICadManuLogin) {
-                GUICadManuLogin guiLogin = new GUICadManuLogin(this);
-                jdpAreaDeTrabalho.add(guiLogin);
-                guiLogin.setVisible(true);
-                flagGUICadManuLogin = true;
-                guiLogin.addInternalFrameListener(new InternalFrameAdapter() {
-                    @Override
-                    public void internalFrameClosed(InternalFrameEvent e) {
-                        flagGUICadManuLogin = false;
+    private void sairDoSistema() {
+        try {
+            // Limpa a sessão do usuário
+            SessaoUsuario.limparSessao();
+
+            // Fecha todas as janelas internas (JInternalFrame)
+            if (jdpAreaDeTrabalho != null) {
+                JInternalFrame[] frames = jdpAreaDeTrabalho.getAllFrames();
+                for (JInternalFrame frame : frames) {
+                    if (frame != null && !frame.isClosed()) {
+                        frame.dispose();
                     }
-                });
+                }
             }
-        } else {
-            JOptionPane.showMessageDialog(this, "Apenas administradores podem acessar esta função!");
+
+            // Fecha a janela principal
+            this.setVisible(false);
+            this.dispose();
+
+            // Abre a tela de login
+            SwingUtilities.invokeLater(() -> {
+                try {
+                    GUILogin login = new GUILogin();
+                    login.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                    login.setVisible(true);
+                } catch (Exception e) {
+                    JOptionPane.showMessageDialog(null, "Erro ao abrir tela de login: " + e.getMessage());
+                }
+            });
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Erro ao sair do sistema: " + e.getMessage(), 
+                "Erro", JOptionPane.ERROR_MESSAGE);
         }
     }
     
@@ -490,6 +506,10 @@ public class GUIMenuPrincipal extends javax.swing.JFrame implements InternalFram
         }
     }//GEN-LAST:event_jniLoginKeyPressed
 
+    private void jMenu2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu2MouseClicked
+        sairDoSistema();
+    }//GEN-LAST:event_jMenu2MouseClicked
+    
     /**
      * @param args the command line arguments
      */
@@ -532,11 +552,12 @@ public class GUIMenuPrincipal extends javax.swing.JFrame implements InternalFram
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenu jMenu1;
-    private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenu jMenu2;
     private javax.swing.JPopupMenu.Separator jSeparator1;
     private javax.swing.JPopupMenu.Separator jSeparator2;
     private javax.swing.JDesktopPane jdpAreaDeTrabalho;
     private javax.swing.JMenu jmCadastro;
+    private javax.swing.JMenuBar jmbMenu;
     private javax.swing.JMenuItem jniAutor;
     private javax.swing.JMenuItem jniCliente;
     private javax.swing.JMenuItem jniDevolucao;

@@ -12,8 +12,11 @@ import java.sql.ResultSet;
 import javax.swing.JOptionPane;
 import services.ServicosFactory;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import javax.swing.table.DefaultTableModel;
 import model.LoginVO;
 import util.SessaoUsuario;
@@ -25,6 +28,9 @@ import util.SessaoUsuario;
 public class GUICadManuLogin extends javax.swing.JInternalFrame {
     private Vector<Integer> codperfil = new Vector<Integer>();
     private GUIMenuPrincipal menuPrincipal;
+    
+    private List<Integer> idsLogins = new ArrayList<>(); // para o primeiro painel
+    private List<Integer> idsGerenciarLogins = new ArrayList<>();
     
     // Modos de operação
     public static final int MODO_CADASTRO_FUNCIONARIO = 1;
@@ -38,7 +44,7 @@ public class GUICadManuLogin extends javax.swing.JInternalFrame {
     
     DefaultTableModel dtm = new DefaultTableModel(
             new Object [][]{},
-            new Object[]{"Login"}
+            new Object[]{"Login", "Perfil"}
     );
 
     /**
@@ -50,7 +56,28 @@ public class GUICadManuLogin extends javax.swing.JInternalFrame {
         restaurarPerfilComboBox();
     }
     
-    // Construtor para cadastro de novo funcionário (da GUIFuncionario)
+    public GUICadManuLogin(GUIMenuPrincipal menu) {
+        this();
+        this.menuPrincipal = menu;
+
+        if (SessaoUsuario.isUsuarioLogado()) {
+            LoginVO usuario = SessaoUsuario.getUsuarioLogado();
+            this.loginInicial = usuario.getLogin();
+            this.idLoginEmEdicao = usuario.getIdLogin();
+            this.abertoPorAdmin = SessaoUsuario.isAdministrador();
+            this.modoOperacao = MODO_ALTERAR_PROPRIOS_DADOS;
+        }
+
+        configurarInterface();
+
+        // ✅ Só mostra aba de gerenciamento se for admin
+        if (!SessaoUsuario.isAdministrador()) {
+            jTabbedPane1.remove(1); // Remove a aba "Gerenciar Logins"
+        } else {
+            preencherTabela();
+        }
+    }
+    
     public GUICadManuLogin(GUIMenuPrincipal menu, String emailNovoFuncionario, boolean isAdmin) {
         this();
         this.menuPrincipal = menu;
@@ -59,30 +86,10 @@ public class GUICadManuLogin extends javax.swing.JInternalFrame {
         this.modoOperacao = MODO_CADASTRO_FUNCIONARIO;
         configurarInterface();
     }
-    
-    // Construtor para alterar próprios dados (do menu principal)
-    public GUICadManuLogin(GUIMenuPrincipal menu, LoginVO usuarioLogado) {
-        this();
-        this.menuPrincipal = menu;
-        this.loginInicial = usuarioLogado.getLogin();
-        this.idLoginEmEdicao = usuarioLogado.getIdLogin();
-        this.abertoPorAdmin = SessaoUsuario.isAdministrador();
-        this.modoOperacao = MODO_ALTERAR_PROPRIOS_DADOS;
-        configurarInterface();
-    }
-    
-    // Construtor para cadastro genérico (só admin pelo menu)
-    public GUICadManuLogin(GUIMenuPrincipal menu) {
-        this();
-        this.menuPrincipal = menu;
-        this.abertoPorAdmin = SessaoUsuario.isAdministrador();
-        this.modoOperacao = MODO_CADASTRO_GENERICO;
-        configurarInterface();
-    }
-    
+   
     private void configurarInterface() {
         restaurarPerfilComboBox();
-        
+
         switch (modoOperacao) {
             case MODO_CADASTRO_FUNCIONARIO:
                 configurarModoCadastroFuncionario();
@@ -94,10 +101,19 @@ public class GUICadManuLogin extends javax.swing.JInternalFrame {
                 configurarModoCadastroGenerico();
                 break;
         }
+
+        // ✅ Configura filtro automático para o campo de pesquisa
+        if (jtfPesquisar != null) {
+            jtfPesquisar.getDocument().addDocumentListener(new DocumentListener() {
+                public void changedUpdate(DocumentEvent e) { filtrar(); }
+                public void removeUpdate(DocumentEvent e) { filtrar(); }
+                public void insertUpdate(DocumentEvent e) { filtrar(); }
+            });
+        }
     }
     
     private void configurarModoCadastroFuncionario() {
-        setTitle("Cadastro de Login - Novo Funcionário");
+        jçTtitulo.setText("Cadastro de Login - Novo Funcionário");
         jbtnCadastrar.setText("Cadastrar Login");
         
         if (loginInicial != null && !loginInicial.trim().isEmpty()) {
@@ -113,27 +129,25 @@ public class GUICadManuLogin extends javax.swing.JInternalFrame {
     }
     
     private void configurarModoAlterarPropriosDados() {
-        setTitle("Meus Dados");
         jbtnCadastrar.setText("Salvar Alterações");
-        
+
         if (loginInicial != null && !loginInicial.trim().isEmpty()) {
             jtfLogin.setText(loginInicial.trim());
-            jtfLogin.setEditable(true);
+            // ✅ Funcionário NÃO pode alterar login
+            jtfLogin.setEditable(false);
         }
-        
+
         LoginVO usuario = SessaoUsuario.getUsuarioLogado();
         if (usuario != null) {
             selecionarPerfilPorId(usuario.getPerfil());
         }
-        
-        jcbPerfil.setEnabled(false); 
-        
+
+        jcbPerfil.setEnabled(false);
         jpfSenhaAtual.setVisible(true);
         jLabelSenhaAtual.setVisible(true);
     }
     
     private void configurarModoCadastroGenerico() {
-        setTitle("Cadastro de Login");
         jbtnCadastrar.setText("Cadastrar");
         
         jtfLogin.setText("");
@@ -163,10 +177,10 @@ public class GUICadManuLogin extends javax.swing.JInternalFrame {
         jLayeredPane5 = new javax.swing.JLayeredPane();
         jbtnCadastrar = new javax.swing.JButton();
         jbtnLimpar4 = new javax.swing.JButton();
-        jbtnAlterar4 = new javax.swing.JButton();
+        jbtnRebaixar = new javax.swing.JButton();
         jbtnDeletar4 = new javax.swing.JButton();
-        jbtnPreencher4 = new javax.swing.JButton();
-        jLabel1 = new javax.swing.JLabel();
+        jbtnPromover = new javax.swing.JButton();
+        jçTtitulo = new javax.swing.JLabel();
         jTabbedPane1 = new javax.swing.JTabbedPane();
         jPanel1 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
@@ -182,7 +196,7 @@ public class GUICadManuLogin extends javax.swing.JInternalFrame {
         jLabel11 = new javax.swing.JLabel();
         jtfPesquisar = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jtLogin = new javax.swing.JTable();
+        jtGerenciarLogins = new javax.swing.JTable();
 
         jLabel12.setText("jLabel12");
 
@@ -218,11 +232,11 @@ public class GUICadManuLogin extends javax.swing.JInternalFrame {
             }
         });
 
-        jbtnAlterar4.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jbtnAlterar4.setText("Alterar");
-        jbtnAlterar4.addActionListener(new java.awt.event.ActionListener() {
+        jbtnRebaixar.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jbtnRebaixar.setText("Rebaixar Perfil");
+        jbtnRebaixar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jbtnAlterar4ActionPerformed(evt);
+                jbtnRebaixarActionPerformed(evt);
             }
         });
 
@@ -234,33 +248,33 @@ public class GUICadManuLogin extends javax.swing.JInternalFrame {
             }
         });
 
-        jbtnPreencher4.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jbtnPreencher4.setText("Preencher");
-        jbtnPreencher4.addActionListener(new java.awt.event.ActionListener() {
+        jbtnPromover.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jbtnPromover.setText("Promover Perfil");
+        jbtnPromover.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jbtnPreencher4ActionPerformed(evt);
+                jbtnPromoverActionPerformed(evt);
             }
         });
 
         jLayeredPane5.setLayer(jbtnCadastrar, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jLayeredPane5.setLayer(jbtnLimpar4, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jLayeredPane5.setLayer(jbtnAlterar4, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jLayeredPane5.setLayer(jbtnRebaixar, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jLayeredPane5.setLayer(jbtnDeletar4, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jLayeredPane5.setLayer(jbtnPreencher4, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jLayeredPane5.setLayer(jbtnPromover, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         javax.swing.GroupLayout jLayeredPane5Layout = new javax.swing.GroupLayout(jLayeredPane5);
         jLayeredPane5.setLayout(jLayeredPane5Layout);
         jLayeredPane5Layout.setHorizontalGroup(
             jLayeredPane5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jLayeredPane5Layout.createSequentialGroup()
-                .addContainerGap(112, Short.MAX_VALUE)
+                .addContainerGap(54, Short.MAX_VALUE)
                 .addComponent(jbtnCadastrar)
                 .addGap(18, 18, 18)
                 .addComponent(jbtnLimpar4)
                 .addGap(18, 18, 18)
-                .addComponent(jbtnPreencher4)
+                .addComponent(jbtnPromover)
                 .addGap(18, 18, 18)
-                .addComponent(jbtnAlterar4)
+                .addComponent(jbtnRebaixar)
                 .addGap(18, 18, 18)
                 .addComponent(jbtnDeletar4)
                 .addGap(36, 36, 36))
@@ -272,16 +286,16 @@ public class GUICadManuLogin extends javax.swing.JInternalFrame {
                 .addGroup(jLayeredPane5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jbtnCadastrar)
                     .addComponent(jbtnLimpar4)
-                    .addComponent(jbtnAlterar4)
+                    .addComponent(jbtnRebaixar)
                     .addComponent(jbtnDeletar4)
-                    .addComponent(jbtnPreencher4))
+                    .addComponent(jbtnPromover))
                 .addContainerGap(19, Short.MAX_VALUE))
         );
 
-        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
-        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("Login");
-        jLabel1.setToolTipText("");
+        jçTtitulo.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
+        jçTtitulo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jçTtitulo.setText("Login");
+        jçTtitulo.setToolTipText("");
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -316,7 +330,7 @@ public class GUICadManuLogin extends javax.swing.JInternalFrame {
                         .addComponent(jLabelSenhaAtual)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jpfSenhaAtual, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 116, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 151, Short.MAX_VALUE)
                         .addComponent(jcbPerfil, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(56, 56, 56))
                     .addGroup(jPanel1Layout.createSequentialGroup()
@@ -360,7 +374,7 @@ public class GUICadManuLogin extends javax.swing.JInternalFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel15)
                     .addComponent(jpfConfirmacao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(22, Short.MAX_VALUE))
+                .addContainerGap(27, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Cadastro", jPanel1);
@@ -375,7 +389,7 @@ public class GUICadManuLogin extends javax.swing.JInternalFrame {
             }
         });
 
-        jtLogin.setModel(new javax.swing.table.DefaultTableModel(
+        jtGerenciarLogins.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null},
                 {null, null},
@@ -386,7 +400,7 @@ public class GUICadManuLogin extends javax.swing.JInternalFrame {
                 "Login", "Perfil"
             }
         ));
-        jScrollPane1.setViewportView(jtLogin);
+        jScrollPane1.setViewportView(jtGerenciarLogins);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -395,7 +409,7 @@ public class GUICadManuLogin extends javax.swing.JInternalFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(14, 14, 14)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 632, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 667, Short.MAX_VALUE)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jLabel11)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -410,7 +424,7 @@ public class GUICadManuLogin extends javax.swing.JInternalFrame {
                     .addComponent(jLabel11)
                     .addComponent(jtfPesquisar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 175, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 180, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -424,7 +438,7 @@ public class GUICadManuLogin extends javax.swing.JInternalFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLayeredPane5)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jçTtitulo, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
@@ -435,8 +449,8 @@ public class GUICadManuLogin extends javax.swing.JInternalFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 315, Short.MAX_VALUE)
+                .addComponent(jçTtitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 320, Short.MAX_VALUE)
                 .addComponent(jLayeredPane5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -478,7 +492,7 @@ public class GUICadManuLogin extends javax.swing.JInternalFrame {
         }
     }
     
-     private void salvarLogin() {
+    private void salvarLogin() {
         try {
             switch (modoOperacao) {
                 case MODO_CADASTRO_FUNCIONARIO:
@@ -582,22 +596,231 @@ public class GUICadManuLogin extends javax.swing.JInternalFrame {
         limpar();
         dispose();
     }
-     
+    
+    private void preencherTabela() {
+        try {
+            DefaultTableModel dtmGerenciar = (DefaultTableModel) jtGerenciarLogins.getModel();
+            dtmGerenciar.setNumRows(0);
+            idsGerenciarLogins.clear();
+
+            LoginServicos ls = ServicosFactory.getLoginServicos();
+            ArrayList<LoginVO> logins = ls.buscarTodosLogins();
+
+            for (LoginVO l : logins) {
+                // Não mostrar o próprio admin na lista (evita auto-exclusão)
+                if (l.getIdLogin() == SessaoUsuario.getUsuarioLogado().getIdLogin()) {
+                    continue;
+                }
+
+                String nomePerfil = getNomePerfil(l.getPerfil());
+                dtmGerenciar.addRow(new Object[]{
+                    l.getLogin(),
+                    nomePerfil
+                });
+                idsGerenciarLogins.add(l.getIdLogin());
+            }
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Erro ao carregar logins: " + e.getMessage());
+        }
+    }
+
+    private String getNomePerfil(int idPerfil) {
+        return switch (idPerfil) {
+            case 1 -> "Cliente";
+            case 2 -> "Funcionario";
+            case 3 -> "Admin";
+            default -> "Desconhecido";
+        };
+    }
+    
+    private void promoverLogin() {
+        try {
+            int linha = jtGerenciarLogins.getSelectedRow();
+            if (linha == -1) {
+                JOptionPane.showMessageDialog(this, "Selecione um login para promover!");
+                return;
+            }
+
+            int idLogin = idsGerenciarLogins.get(linha);
+            String loginSelecionado = (String) jtGerenciarLogins.getValueAt(linha, 0);
+            String perfilAtual = (String) jtGerenciarLogins.getValueAt(linha, 1);
+
+            // ✅ Define o novo perfil baseado no atual
+            String novoPerfil;
+            int idNovoPerfil;
+
+            if ("Funcionario".equals(perfilAtual)) {
+                novoPerfil = "Admin";
+                idNovoPerfil = 3;
+            } else if ("Cliente".equals(perfilAtual)) {
+                novoPerfil = "Funcionario";
+                idNovoPerfil = 2;
+            } else {
+                JOptionPane.showMessageDialog(this, "Não é possível promover este perfil.");
+                return;
+            }
+
+            int confirma = JOptionPane.showConfirmDialog(
+                this,
+                "Promover '" + loginSelecionado + "' para '" + novoPerfil + "'?",
+                "Confirmar Promoção",
+                JOptionPane.YES_NO_OPTION,
+                JOptionPane.QUESTION_MESSAGE
+            );
+
+            if (confirma == JOptionPane.YES_OPTION) {
+                LoginServicos ls = ServicosFactory.getLoginServicos();
+                LoginVO loginAtual = ls.buscarLoginPorId(idLogin);
+                ls.atualizarPerfil(idLogin, idNovoPerfil);
+
+                JOptionPane.showMessageDialog(this, "Usuário promovido com sucesso!");
+                preencherTabela();
+            }
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Erro ao promover usuário: " + e.getMessage());
+        }
+    }
+    
+    private void rebaixarLogin() {
+        try {
+            int linha = jtGerenciarLogins.getSelectedRow();
+            if (linha == -1) {
+                JOptionPane.showMessageDialog(this, "Selecione um login para rebaixar!");
+                return;
+            }
+
+            int idLogin = idsGerenciarLogins.get(linha);
+            String loginSelecionado = (String) jtGerenciarLogins.getValueAt(linha, 0);
+            String perfilAtual = (String) jtGerenciarLogins.getValueAt(linha, 1);
+
+            // ✅ Define o novo perfil baseado no atual
+            String novoPerfil;
+            int idNovoPerfil;
+
+            if ("Admin".equals(perfilAtual)) {
+                novoPerfil = "Funcionario";
+                idNovoPerfil = 2;
+            } else if ("Funcionario".equals(perfilAtual)) {
+                novoPerfil = "Cliente";
+                idNovoPerfil = 1;
+            } else {
+                JOptionPane.showMessageDialog(this, "Não é possível rebaixar este perfil.");
+                return;
+            }
+
+            int confirma = JOptionPane.showConfirmDialog(
+                this,
+                "Rebaixar '" + loginSelecionado + "' para '" + novoPerfil + "'?",
+                "Confirmar Rebaixamento",
+                JOptionPane.YES_NO_OPTION,
+                JOptionPane.WARNING_MESSAGE
+            );
+
+            if (confirma == JOptionPane.YES_OPTION) {
+                LoginServicos ls = ServicosFactory.getLoginServicos();
+                LoginVO loginAtual = ls.buscarLoginPorId(idLogin);
+                ls.atualizarPerfil(idLogin, idNovoPerfil); 
+
+                JOptionPane.showMessageDialog(this, "Usuário rebaixado com sucesso!");
+                preencherTabela();
+            }
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Erro ao rebaixar usuário: " + e.getMessage());
+        }
+    }
+    
+    private void deletarLogin() {
+        try {
+            int linha = jtGerenciarLogins.getSelectedRow();
+            if (linha == -1) {
+                JOptionPane.showMessageDialog(this, "Selecione um login para excluir!");
+                return;
+            }
+
+            int idLogin = idsGerenciarLogins.get(linha);
+            String loginExcluido = (String) jtGerenciarLogins.getValueAt(linha, 1);
+
+            int confirma = JOptionPane.showConfirmDialog(
+                this,
+                "Excluir login '" + loginExcluido + "' permanentemente?\n" +
+                "⚠️ Esta ação não pode ser desfeita!",
+                "Confirmar Exclusão",
+                JOptionPane.YES_NO_OPTION,
+                JOptionPane.WARNING_MESSAGE
+            );
+
+            if (confirma == JOptionPane.YES_OPTION) {
+                LoginServicos ls = ServicosFactory.getLoginServicos();
+                ls.deletarLogin(idLogin);
+
+                JOptionPane.showMessageDialog(this, "Login excluído com sucesso!");
+                limpar();
+                preencherTabela();
+            }
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Erro ao excluir login: " + e.getMessage());
+        }
+    }
+    
+    private void filtrar() {
+        try {
+            String termo = jtfPesquisar.getText().trim();
+            DefaultTableModel dtmGerenciar = (DefaultTableModel) jtGerenciarLogins.getModel();
+            dtmGerenciar.setNumRows(0);
+            idsGerenciarLogins.clear();
+
+            if (termo.isEmpty()) {
+                // Se não há termo, carrega todos os logins
+                preencherTabela();
+            } else {
+                // Filtra pelo login (email)
+                LoginServicos ls = ServicosFactory.getLoginServicos();
+                ArrayList<LoginVO> logins = ls.filtrarLoginsPorLogin(termo);
+
+                for (LoginVO l : logins) {
+                    // Não mostrar o próprio admin na lista
+                    if (l.getIdLogin() == SessaoUsuario.getUsuarioLogado().getIdLogin()) {
+                        continue;
+                    }
+
+                    String nomePerfil = getNomePerfil(l.getPerfil());
+                    dtmGerenciar.addRow(new Object[]{
+                        l.getLogin(),
+                        nomePerfil
+                    });
+                    idsGerenciarLogins.add(l.getIdLogin());
+                }
+            }
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Erro ao filtrar logins: " + e.getMessage());
+        }
+    }
+    
     private void limpar(){
         jtfLogin.setText(null);
         jpfSenha.setText(null);
         jpfConfirmacao.setText(null);
         jpfSenhaAtual.setText(null);
         dtm.setNumRows(0);
+        preencherTabela();
     }
     
     private void jbtnCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnCadastrarActionPerformed
         salvarLogin();
+        limpar();
+        preencherTabela();
     }//GEN-LAST:event_jbtnCadastrarActionPerformed
 
     private void jbtnCadastrarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jbtnCadastrarKeyPressed
         if(evt.getKeyCode() == KeyEvent.VK_ENTER){
             salvarLogin();
+            limpar();
+            preencherTabela();
         }
     }//GEN-LAST:event_jbtnCadastrarKeyPressed
 
@@ -611,26 +834,25 @@ public class GUICadManuLogin extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_jbtnLimpar4KeyPressed
 
-    private void jbtnAlterar4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnAlterar4ActionPerformed
-        //confirmarAlterarFuncionario();
-    }//GEN-LAST:event_jbtnAlterar4ActionPerformed
+    private void jbtnRebaixarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnRebaixarActionPerformed
+        rebaixarLogin();
+    }//GEN-LAST:event_jbtnRebaixarActionPerformed
 
     private void jbtnDeletar4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnDeletar4ActionPerformed
-        //deletarFuncionario();
+        deletarLogin();
     }//GEN-LAST:event_jbtnDeletar4ActionPerformed
-
-    private void jbtnPreencher4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnPreencher4ActionPerformed
-        //preencherAlterarFuncionario();
-    }//GEN-LAST:event_jbtnPreencher4ActionPerformed
 
     private void jtfPesquisarKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtfPesquisarKeyReleased
         limpar();
-        //filtrar();
+        filtrar();
     }//GEN-LAST:event_jtfPesquisarKeyReleased
+
+    private void jbtnPromoverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnPromoverActionPerformed
+        promoverLogin();
+    }//GEN-LAST:event_jbtnPromoverActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
@@ -643,17 +865,18 @@ public class GUICadManuLogin extends javax.swing.JInternalFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTabbedPane jTabbedPane1;
-    private javax.swing.JButton jbtnAlterar4;
     private javax.swing.JButton jbtnCadastrar;
     private javax.swing.JButton jbtnDeletar4;
     private javax.swing.JButton jbtnLimpar4;
-    private javax.swing.JButton jbtnPreencher4;
+    private javax.swing.JButton jbtnPromover;
+    private javax.swing.JButton jbtnRebaixar;
     private javax.swing.JComboBox<String> jcbPerfil;
     private javax.swing.JPasswordField jpfConfirmacao;
     private javax.swing.JPasswordField jpfSenha;
     private javax.swing.JPasswordField jpfSenhaAtual;
-    private javax.swing.JTable jtLogin;
+    private javax.swing.JTable jtGerenciarLogins;
     private javax.swing.JTextField jtfLogin;
     private javax.swing.JTextField jtfPesquisar;
+    private javax.swing.JLabel jçTtitulo;
     // End of variables declaration//GEN-END:variables
 }
