@@ -86,6 +86,24 @@ public class GUICadManuLogin extends javax.swing.JInternalFrame {
         this.modoOperacao = MODO_CADASTRO_FUNCIONARIO;
         configurarInterface();
     }
+    
+    public GUICadManuLogin(GUILogin guiLogin, int perfilFixo) {
+        this(); // chama construtor padrão
+        this.loginInicial = "";
+        this.modoOperacao = MODO_CADASTRO_GENERICO;
+        this.perfilFixo = perfilFixo;
+        this.perfilEditavel = false;
+
+        if (perfilFixo == 3) {
+            configurarParaPrimeiroAcesso();
+        } else if (perfilFixo == 1) {
+            configurarParaCliente();
+        }
+    }
+
+    // Campos adicionais
+    private int perfilFixo = -1;
+    private boolean perfilEditavel = true;
    
     private void configurarInterface() {
         restaurarPerfilComboBox();
@@ -159,6 +177,39 @@ public class GUICadManuLogin extends javax.swing.JInternalFrame {
         
         jcbPerfil.setEnabled(abertoPorAdmin);
         
+        jpfSenhaAtual.setVisible(false);
+        jLabelSenhaAtual.setVisible(false);
+    }
+    
+    private void configurarParaPrimeiroAcesso() {
+    setTitle("Primeiro Acesso - Criar Administrador");
+    jbtnCadastrar.setText("Criar Administrador");
+    
+    // Força perfil Admin
+    selecionarPerfilPorId(3);
+    jcbPerfil.setEnabled(false); // Travado como Admin
+    
+    // Login editável (primeiro usuário define seu login)
+    jtfLogin.setEditable(true);
+    jtfLogin.setText("");
+    
+    // Esconde campos não necessários
+    jpfSenhaAtual.setVisible(false);
+    jLabelSenhaAtual.setVisible(false);
+}
+
+    private void configurarParaCliente() {
+        setTitle("Cadastro de Cliente");
+        jbtnCadastrar.setText("Criar Conta");
+
+        // Força perfil Cliente
+        selecionarPerfilPorId(1);
+        jcbPerfil.setEnabled(false); // Travado como Cliente
+
+        // Login editável
+        jtfLogin.setEditable(true);
+        jtfLogin.setText("");
+
         jpfSenhaAtual.setVisible(false);
         jLabelSenhaAtual.setVisible(false);
     }
@@ -509,37 +560,40 @@ public class GUICadManuLogin extends javax.swing.JInternalFrame {
     }
      
     private void cadastrarNovoLogin() throws Exception {
-        String login = jtfLogin.getText();
+        String login = jtfLogin.getText().trim();
         String senha = jpfSenha.getText().trim();
         String confirmacao = jpfConfirmacao.getText().trim();
-        
+
         if (login.isEmpty() || senha.isEmpty() || confirmacao.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Preencha todos os campos!");
             return;
         }
-        
+
         if (!senha.equals(confirmacao)) {
             JOptionPane.showMessageDialog(this, "As senhas não coincidem!");
             return;
         }
-        
-        int idPerfil;
-        if (modoOperacao == MODO_CADASTRO_FUNCIONARIO && !abertoPorAdmin) {
-            idPerfil = 2; // Força Funcionário
-        } else {
-            int selectedIndex = jcbPerfil.getSelectedIndex();
-            if (selectedIndex == -1) {
-                JOptionPane.showMessageDialog(this, "Selecione um perfil!");
-                return;
-            }
-            idPerfil = codperfil.get(selectedIndex);
-        }
-        
+
+        // ✅ Usa perfil fixo se definido
+        int idPerfil = (perfilFixo != -1) ? perfilFixo : obterPerfilSelecionado();
+
         LoginServicos ls = ServicosFactory.getLoginServicos();
         ls.cadastrarLogin(login, senha, idPerfil);
-        
-        JOptionPane.showMessageDialog(this, "Login criado com sucesso!");
+
+        String mensagem = (perfilFixo == 3) ? 
+            "Administrador criado com sucesso!" : 
+            "Conta de cliente criada com sucesso!";
+
+        JOptionPane.showMessageDialog(this, mensagem);
         dispose();
+    }
+
+    private int obterPerfilSelecionado() throws Exception {
+        int selectedIndex = jcbPerfil.getSelectedIndex();
+        if (selectedIndex == -1) {
+            throw new Exception("Selecione um perfil!");
+        }
+        return codperfil.get(selectedIndex);
     }
      
     private void alterarMeusDados() throws Exception {
