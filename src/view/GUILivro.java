@@ -24,6 +24,7 @@ public class GUILivro extends javax.swing.JInternalFrame {
     private List<Integer> idsLivros = new ArrayList<>();
     private int idLivroEmEdicao = -1;
     private GUIMenuPrincipal menuPrincipal;
+    private boolean modoCliente = false;
     
     DefaultTableModel dtm = new DefaultTableModel(
         new Object[][]{},
@@ -50,6 +51,12 @@ public class GUILivro extends javax.swing.JInternalFrame {
     public GUILivro(GUIMenuPrincipal menu) {
         this(); 
         this.menuPrincipal = menu;
+    }
+    
+    public GUILivro(boolean cliente) {
+        this();
+        this.modoCliente = cliente;
+        configurarModoCliente();
     }
 
     /**
@@ -89,7 +96,7 @@ public class GUILivro extends javax.swing.JInternalFrame {
         jbtnAutor = new javax.swing.JButton();
         jbtnGenero = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
-        jLabel11 = new javax.swing.JLabel();
+        jlPesquisa = new javax.swing.JLabel();
         jtfPesquisar = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         jtLivros = new javax.swing.JTable();
@@ -298,8 +305,8 @@ public class GUILivro extends javax.swing.JInternalFrame {
 
         jTabbedPane1.addTab("Cadastro", jPanel1);
 
-        jLabel11.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        jLabel11.setText("Pesquisar:");
+        jlPesquisa.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jlPesquisa.setText("Pesquisar:");
 
         jtfPesquisar.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jtfPesquisar.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -336,7 +343,7 @@ public class GUILivro extends javax.swing.JInternalFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jLabel11)
+                        .addComponent(jlPesquisa)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jtfPesquisar, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -350,7 +357,7 @@ public class GUILivro extends javax.swing.JInternalFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(14, 14, 14)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel11)
+                    .addComponent(jlPesquisa)
                     .addComponent(jtfPesquisar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jcbDisponibilidade, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jcbTipoPesquisa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -477,6 +484,32 @@ public class GUILivro extends javax.swing.JInternalFrame {
         carregarEditoras("");
         carregarAutores("");
         carregarGeneros("");
+    }
+    
+    private void configurarModoCliente() {
+        // ✅ Oculta abas de cadastro/edição
+        if (jTabbedPane1.getTabCount() > 1) {
+            jTabbedPane1.removeTabAt(0); // Remove aba de cadastro
+        }
+
+        // ✅ Oculta botões de ação
+        jbtnCadastrar.setVisible(false);
+        jbtnAlterar.setVisible(false);
+        jbtnDeletar.setVisible(false);
+
+        // ✅ Oculta campos de filtro avançado
+        jcbTipoPesquisa.setVisible(false);
+        jlPesquisa.setVisible(false); // assumindo que você tem esse label
+
+        // ✅ Define filtro padrão como "Disponível"
+        jcbDisponibilidade.setSelectedItem("Disponível");
+        jcbDisponibilidade.setEnabled(false); // trava como "Disponível"
+
+        // ✅ Atualiza título
+        setTitle("Pesquisa de Livros - Cliente");
+
+        // ✅ Recarrega tabela com só livros disponíveis
+        preencherTabela();
     }
 
     private void cadastrarLivro() {
@@ -1017,7 +1050,6 @@ public class GUILivro extends javax.swing.JInternalFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -1046,6 +1078,7 @@ public class GUILivro extends javax.swing.JInternalFrame {
     private javax.swing.JComboBox<String> jcbTipoPesquisa;
     private javax.swing.JList<AutorVO> jlAutor;
     private javax.swing.JList<GeneroVO> jlGenero;
+    private javax.swing.JLabel jlPesquisa;
     private javax.swing.JTable jtLivros;
     private javax.swing.JTextField jtfAutor;
     private javax.swing.JFormattedTextField jtfDTLancamento;

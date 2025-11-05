@@ -87,8 +87,18 @@ public class GUICadManuLogin extends javax.swing.JInternalFrame {
         configurarInterface();
     }
     
-    public GUICadManuLogin(GUILogin guiLogin, int perfilFixo) {
-        this(); // chama construtor padrão
+    // Nova constante para identificar origem
+    public static final int ORIGEM_LOGIN = 1;
+    public static final int ORIGEM_MENU = 2;
+
+    private int origemChamada = ORIGEM_MENU; // padrão
+    private GUILogin guiLoginOrigem = null;
+
+    // ✅ Construtor atualizado para receber origem
+    public GUICadManuLogin(GUILogin guiLogin, int perfilFixo, int origem) {
+        this();
+        this.guiLoginOrigem = guiLogin;
+        this.origemChamada = origem;
         this.loginInicial = "";
         this.modoOperacao = MODO_CADASTRO_GENERICO;
         this.perfilFixo = perfilFixo;
@@ -585,6 +595,14 @@ public class GUICadManuLogin extends javax.swing.JInternalFrame {
             "Conta de cliente criada com sucesso!";
 
         JOptionPane.showMessageDialog(this, mensagem);
+        
+        if (origemChamada == ORIGEM_LOGIN && guiLoginOrigem != null) {
+            // Volta para a tela de login
+            guiLoginOrigem.setVisible(true);
+            guiLoginOrigem.toFront();
+        } else {
+            // Fecha apenas esta janela (comportamento normal)
+        }
         dispose();
     }
 

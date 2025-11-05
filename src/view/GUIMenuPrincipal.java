@@ -555,7 +555,7 @@ public class GUIMenuPrincipal extends javax.swing.JFrame implements InternalFram
     private javax.swing.JMenu jMenu2;
     private javax.swing.JPopupMenu.Separator jSeparator1;
     private javax.swing.JPopupMenu.Separator jSeparator2;
-    private javax.swing.JDesktopPane jdpAreaDeTrabalho;
+    public javax.swing.JDesktopPane jdpAreaDeTrabalho;
     private javax.swing.JMenu jmCadastro;
     private javax.swing.JMenuBar jmbMenu;
     private javax.swing.JMenuItem jniAutor;

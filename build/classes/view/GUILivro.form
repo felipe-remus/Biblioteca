@@ -424,7 +424,7 @@
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="jScrollPane1" alignment="0" max="32767" attributes="0"/>
                           <Group type="102" alignment="0" attributes="0">
-                              <Component id="jLabel11" min="-2" max="-2" attributes="0"/>
+                              <Component id="jlPesquisa" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
                               <Component id="jtfPesquisar" min="-2" pref="270" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
@@ -442,7 +442,7 @@
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace min="-2" pref="14" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="jLabel11" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="jlPesquisa" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="jtfPesquisar" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="jcbDisponibilidade" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="jcbTipoPesquisa" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -455,7 +455,7 @@
             </DimensionLayout>
           </Layout>
           <SubComponents>
-            <Component class="javax.swing.JLabel" name="jLabel11">
+            <Component class="javax.swing.JLabel" name="jlPesquisa">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Segoe UI" size="18" style="0"/>
