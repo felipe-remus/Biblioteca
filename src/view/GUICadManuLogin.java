@@ -273,6 +273,7 @@ public class GUICadManuLogin extends javax.swing.JInternalFrame {
         jpfSenhaAtual = new javax.swing.JPasswordField();
         jLabel15 = new javax.swing.JLabel();
         jpfConfirmacao = new javax.swing.JPasswordField();
+        jcdMostrarSenha = new javax.swing.JCheckBox();
         jPanel2 = new javax.swing.JPanel();
         jLabel11 = new javax.swing.JLabel();
         jtfPesquisar = new javax.swing.JTextField();
@@ -400,6 +401,15 @@ public class GUICadManuLogin extends javax.swing.JInternalFrame {
 
         jpfConfirmacao.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
 
+        jcdMostrarSenha.setBackground(new java.awt.Color(40, 40, 40));
+        jcdMostrarSenha.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        jcdMostrarSenha.setText("Mostrar Senha");
+        jcdMostrarSenha.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jcdMostrarSenhaActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -411,25 +421,28 @@ public class GUICadManuLogin extends javax.swing.JInternalFrame {
                         .addComponent(jLabelSenhaAtual)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jpfSenhaAtual, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 151, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 171, Short.MAX_VALUE)
                         .addComponent(jcbPerfil, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(56, 56, 56))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-                                    .addComponent(jLabel2)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(jtfLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 225, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-                                    .addComponent(jLabel14)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(jpfSenha)))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                                        .addComponent(jLabel2)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(jtfLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 225, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                                        .addComponent(jLabel14)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(jpfSenha)))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jcdMostrarSenha))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jLabel15)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jpfConfirmacao, javax.swing.GroupLayout.PREFERRED_SIZE, 208, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addContainerGap(248, Short.MAX_VALUE))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -450,7 +463,8 @@ public class GUICadManuLogin extends javax.swing.JInternalFrame {
                 .addGap(19, 19, 19)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel14)
-                    .addComponent(jpfSenha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jpfSenha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jcdMostrarSenha))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel15)
@@ -588,44 +602,7 @@ public class GUICadManuLogin extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(this, "Erro ao salvar: " + e.getMessage());
         }
     }
-     
-    private void cadastrarNovoLogin() throws Exception {
-        String login = jtfLogin.getText().trim();
-        String senha = jpfSenha.getText().trim();
-        String confirmacao = jpfConfirmacao.getText().trim();
-
-        if (login.isEmpty() || senha.isEmpty() || confirmacao.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Preencha todos os campos!");
-            return;
-        }
-
-        if (!senha.equals(confirmacao)) {
-            JOptionPane.showMessageDialog(this, "As senhas não coincidem!");
-            return;
-        }
-
-        // ✅ Usa perfil fixo se definido
-        int idPerfil = (perfilFixo != -1) ? perfilFixo : obterPerfilSelecionado();
-
-        LoginServicos ls = ServicosFactory.getLoginServicos();
-        ls.cadastrarLogin(login, senha, idPerfil);
-
-        String mensagem = (perfilFixo == 3) ? 
-            "Administrador criado com sucesso!" : 
-            "Conta de cliente criada com sucesso!";
-
-        JOptionPane.showMessageDialog(this, mensagem);
-        
-        // ✅ Fecha e volta para login no modo especial
-        if (menuPrincipal instanceof GUIMenuPrincipalEspecial) {
-            ((GUIMenuPrincipalEspecial) menuPrincipal).voltarParaLogin();
-        } else if (origemChamada == ORIGEM_LOGIN && guiLoginOrigem != null) {
-            guiLoginOrigem.setVisible(true);
-            guiLoginOrigem.toFront();
-        }
-        dispose();
-    }
-
+    
     private int obterPerfilSelecionado() throws Exception {
         int selectedIndex = jcbPerfil.getSelectedIndex();
         if (selectedIndex == -1) {
@@ -634,59 +611,151 @@ public class GUICadManuLogin extends javax.swing.JInternalFrame {
         return codperfil.get(selectedIndex);
     }
      
+    private boolean validarSenha(String senha) {
+        if (senha == null) {
+            return false;
+        }
+
+        // Verifica tamanho mínimo
+        if (senha.length() < 8) {
+            JOptionPane.showMessageDialog(this, 
+                "A senha deve ter no mínimo 8 caracteres.", 
+                "Erro de Validação", 
+                JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+
+        // Verifica se tem pelo menos 1 número
+        boolean temNumero = false;
+        for (char c : senha.toCharArray()) {
+            if (Character.isDigit(c)) {
+                temNumero = true;
+                break;
+            }
+        }
+
+        if (!temNumero) {
+            JOptionPane.showMessageDialog(this, 
+                "A senha deve conter número(s).", 
+                "Erro de Validação", 
+                JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+
+        return true;
+    }
+    
+    private void cadastrarNovoLogin() {
+        try {
+            // ✅ 1. VALIDAÇÃO PRIMEIRO (antes de qualquer processamento)
+            String login = jtfLogin.getText().trim();
+            String senha = jpfSenha.getText().trim();
+            String confirmacao = jpfConfirmacao.getText().trim();
+
+            if (login.isEmpty() || senha.isEmpty() || confirmacao.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Preencha todos os campos!");
+                return; // ❌ Sai antes de processar
+            }
+
+            if (!validarSenha(senha)) {
+                return; // ❌ Sai antes de processar
+            }
+
+            if (!senha.equals(confirmacao)) {
+                JOptionPane.showMessageDialog(this, "As senhas não coincidem!");
+                return; // ❌ Sai antes de processar
+            }
+
+            // ✅ 2. PROCESSAMENTO APENAS SE TUDO ESTIVER VÁLIDO
+            int idPerfil = (perfilFixo != -1) ? perfilFixo : obterPerfilSelecionado();
+
+            LoginServicos ls = ServicosFactory.getLoginServicos();
+            ls.cadastrarLogin(login, senha, idPerfil);
+
+            String mensagem = (perfilFixo == 3) ? 
+                "Administrador criado com sucesso!" : 
+                "Conta de cliente criada com sucesso!";
+
+            JOptionPane.showMessageDialog(this, mensagem);
+
+            // ✅ 3. LIMPAR APENAS APÓS SUCESSO TOTAL
+            limpar();
+            dispose();
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Erro ao cadastrar login: " + e.getMessage());
+            // ❌ NÃO limpa nada aqui - o erro pode ser de rede/banco
+        }
+    }
+
     private void alterarMeusDados() throws Exception {
-        if (idLoginEmEdicao == -1) {
-            JOptionPane.showMessageDialog(this, "Erro: ID de login inválido!");
-            return;
-        }
-        
-        String senhaAtual = jpfSenhaAtual.getText();
-        if (senhaAtual.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Informe sua senha atual!");
-            return;
-        }
-        
-        LoginServicos ls = ServicosFactory.getLoginServicos();
-        if (!ls.validarSenha(idLoginEmEdicao, senhaAtual)) {
-            JOptionPane.showMessageDialog(this, "Senha atual incorreta!");
-            return;
-        }
-        
-        String novoLogin = jtfLogin.getText().trim();
-        String novaSenha = jpfSenha.getText().trim();
-        String confirmacao = jpfConfirmacao.getText(); 
-        
-        if (novoLogin.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "O login não pode estar vazio!");
-            return;
-        }
-        
-        if (!novaSenha.isEmpty() || !confirmacao.isEmpty()) {
-            if (novaSenha.isEmpty() || confirmacao.isEmpty()) {
-                JOptionPane.showMessageDialog(this, "Preencha ambos os campos de nova senha!");
-                return;
+        try {
+            // ✅ 1. VALIDAÇÕES INICIAIS
+            if (idLoginEmEdicao == -1) {
+                JOptionPane.showMessageDialog(this, "Erro: ID de login inválido!");
+                return; // ❌ Sai antes de processar
             }
-            if (!novaSenha.equals(confirmacao)) {
-                JOptionPane.showMessageDialog(this, "As novas senhas não coincidem!");
-                return;
+
+            String senhaAtual = jpfSenhaAtual.getText();
+            if (senhaAtual.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Informe sua senha atual!");
+                return; // ❌ Sai antes de processar
             }
-        } else {
-            novaSenha = senhaAtual;
+
+            LoginServicos ls = ServicosFactory.getLoginServicos();
+            if (!ls.validarSenha(idLoginEmEdicao, senhaAtual)) {
+                JOptionPane.showMessageDialog(this, "Senha atual incorreta!");
+                return; // ❌ Sai antes de processar
+            }
+
+            String novoLogin = jtfLogin.getText().trim();
+            String novaSenha = jpfSenha.getText().trim();
+            String confirmacao = jpfConfirmacao.getText(); 
+
+            if (novoLogin.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "O login não pode estar vazio!");
+                return; // ❌ Sai antes de processar
+            }
+
+            // ✅ 2. VALIDAÇÕES DA NOVA SENHA
+            if (!novaSenha.isEmpty() || !confirmacao.isEmpty()) {
+                if (novaSenha.isEmpty() || confirmacao.isEmpty()) {
+                    JOptionPane.showMessageDialog(this, "Preencha ambos os campos de nova senha!");
+                    return; // ❌ Sai antes de processar
+                }
+                if (!novaSenha.equals(confirmacao)) {
+                    JOptionPane.showMessageDialog(this, "As novas senhas não coincidem!");
+                    return; // ❌ Sai antes de processar
+                }
+
+                // ✅ Validação da nova senha - RETORNA IMEDIATAMENTE se inválida
+                if (!validarSenha(novaSenha)) {
+                    return; // ❌ Sai antes de processar
+                }
+            } else {
+                novaSenha = senhaAtual; // Mantém senha atual se não for alterada
+            }
+
+            // ✅ 3. PROCESSAMENTO APENAS SE TUDO FOR VÁLIDO
+            LoginVO usuario = SessaoUsuario.getUsuarioLogado();
+            int perfilAtual = usuario.getPerfil();
+
+            ls.atualizarLogin(idLoginEmEdicao, novoLogin, novaSenha, perfilAtual);
+
+            // Atualizar sessão
+            usuario.setLogin(novoLogin);
+            SessaoUsuario.setUsuarioLogado(usuario);
+
+            JOptionPane.showMessageDialog(this, "Dados atualizados com sucesso!");
+
+            // ✅ 4. LIMPAR APENAS APÓS SUCESSO TOTAL
+            limpar();
+            dispose();
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Erro ao atualizar dados: " + e.getMessage());
+            // ❌ NÃO limpa nada aqui - o erro pode ser de rede/banco
         }
-        
-        // Manter perfil atual
-        LoginVO usuario = SessaoUsuario.getUsuarioLogado();
-        int perfilAtual = usuario.getPerfil();
-        
-        ls.atualizarLogin(idLoginEmEdicao, novoLogin, novaSenha, perfilAtual);
-        
-        // Atualizar sessão
-        usuario.setLogin(novoLogin);
-        SessaoUsuario.setUsuarioLogado(usuario);
-        
-        JOptionPane.showMessageDialog(this, "Dados atualizados com sucesso!");
-        limpar();
-        dispose();
     }
     
     private void preencherTabela() {
@@ -741,36 +810,29 @@ public class GUICadManuLogin extends javax.swing.JInternalFrame {
             String loginSelecionado = (String) jtGerenciarLogins.getValueAt(linha, 0);
             String perfilAtual = (String) jtGerenciarLogins.getValueAt(linha, 1);
 
-            // ✅ Define o novo perfil baseado no atual
-            String novoPerfil;
-            int idNovoPerfil;
-
+            // ✅ Só permite promover Funcionário para Admin
             if ("Funcionario".equals(perfilAtual)) {
-                novoPerfil = "Admin";
-                idNovoPerfil = 3;
-            } else if ("Cliente".equals(perfilAtual)) {
-                novoPerfil = "Funcionario";
-                idNovoPerfil = 2;
+                String novoPerfil = "Admin";
+                int idNovoPerfil = 3;
+
+                int confirma = JOptionPane.showConfirmDialog(
+                    this,
+                    "Promover '" + loginSelecionado + "' para '" + novoPerfil + "'?",
+                    "Confirmar Promoção",
+                    JOptionPane.YES_NO_OPTION,
+                    JOptionPane.QUESTION_MESSAGE
+                );
+
+                if (confirma == JOptionPane.YES_OPTION) {
+                    LoginServicos ls = ServicosFactory.getLoginServicos();
+                    ls.atualizarPerfil(idLogin, idNovoPerfil);
+
+                    JOptionPane.showMessageDialog(this, "Usuário promovido com sucesso!");
+                    preencherTabela();
+                }
             } else {
-                JOptionPane.showMessageDialog(this, "Não é possível promover este perfil.");
-                return;
-            }
-
-            int confirma = JOptionPane.showConfirmDialog(
-                this,
-                "Promover '" + loginSelecionado + "' para '" + novoPerfil + "'?",
-                "Confirmar Promoção",
-                JOptionPane.YES_NO_OPTION,
-                JOptionPane.QUESTION_MESSAGE
-            );
-
-            if (confirma == JOptionPane.YES_OPTION) {
-                LoginServicos ls = ServicosFactory.getLoginServicos();
-                LoginVO loginAtual = ls.buscarLoginPorId(idLogin);
-                ls.atualizarPerfil(idLogin, idNovoPerfil);
-
-                JOptionPane.showMessageDialog(this, "Usuário promovido com sucesso!");
-                preencherTabela();
+                JOptionPane.showMessageDialog(this, 
+                    "Só é possível promover Funcionário para Admin.");
             }
 
         } catch (Exception e) {
@@ -790,36 +852,29 @@ public class GUICadManuLogin extends javax.swing.JInternalFrame {
             String loginSelecionado = (String) jtGerenciarLogins.getValueAt(linha, 0);
             String perfilAtual = (String) jtGerenciarLogins.getValueAt(linha, 1);
 
-            // ✅ Define o novo perfil baseado no atual
-            String novoPerfil;
-            int idNovoPerfil;
-
+            // ✅ Só permite rebaixar Admin para Funcionário
             if ("Admin".equals(perfilAtual)) {
-                novoPerfil = "Funcionario";
-                idNovoPerfil = 2;
-            } else if ("Funcionario".equals(perfilAtual)) {
-                novoPerfil = "Cliente";
-                idNovoPerfil = 1;
+                String novoPerfil = "Funcionario";
+                int idNovoPerfil = 2;
+
+                int confirma = JOptionPane.showConfirmDialog(
+                    this,
+                    "Rebaixar '" + loginSelecionado + "' para '" + novoPerfil + "'?",
+                    "Confirmar Rebaixamento",
+                    JOptionPane.YES_NO_OPTION,
+                    JOptionPane.WARNING_MESSAGE
+                );
+
+                if (confirma == JOptionPane.YES_OPTION) {
+                    LoginServicos ls = ServicosFactory.getLoginServicos();
+                    ls.atualizarPerfil(idLogin, idNovoPerfil);
+
+                    JOptionPane.showMessageDialog(this, "Usuário rebaixado com sucesso!");
+                    preencherTabela();
+                }
             } else {
-                JOptionPane.showMessageDialog(this, "Não é possível rebaixar este perfil.");
-                return;
-            }
-
-            int confirma = JOptionPane.showConfirmDialog(
-                this,
-                "Rebaixar '" + loginSelecionado + "' para '" + novoPerfil + "'?",
-                "Confirmar Rebaixamento",
-                JOptionPane.YES_NO_OPTION,
-                JOptionPane.WARNING_MESSAGE
-            );
-
-            if (confirma == JOptionPane.YES_OPTION) {
-                LoginServicos ls = ServicosFactory.getLoginServicos();
-                LoginVO loginAtual = ls.buscarLoginPorId(idLogin);
-                ls.atualizarPerfil(idLogin, idNovoPerfil); 
-
-                JOptionPane.showMessageDialog(this, "Usuário rebaixado com sucesso!");
-                preencherTabela();
+                JOptionPane.showMessageDialog(this, 
+                    "Só é possível rebaixar Admins para Funcionário.");
             }
 
         } catch (Exception e) {
@@ -907,13 +962,17 @@ public class GUICadManuLogin extends javax.swing.JInternalFrame {
     
     private void jbtnCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnCadastrarActionPerformed
         salvarLogin();
-        limpar();
+        jpfSenha.setText(null);
+        jpfConfirmacao.setText(null);
+        jpfSenhaAtual.setText(null);
     }//GEN-LAST:event_jbtnCadastrarActionPerformed
 
     private void jbtnCadastrarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jbtnCadastrarKeyPressed
         if(evt.getKeyCode() == KeyEvent.VK_ENTER){
             salvarLogin();
-            limpar();
+            jpfSenha.setText(null);
+            jpfConfirmacao.setText(null);
+            jpfSenhaAtual.setText(null);
         }
     }//GEN-LAST:event_jbtnCadastrarKeyPressed
 
@@ -944,6 +1003,16 @@ public class GUICadManuLogin extends javax.swing.JInternalFrame {
         promoverLogin();
     }//GEN-LAST:event_jbtnPromoverActionPerformed
 
+    private void jcdMostrarSenhaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcdMostrarSenhaActionPerformed
+        if(jcdMostrarSenha.isSelected()){
+            jpfSenha.setEchoChar((char)0);
+            jpfConfirmacao.setEchoChar((char)0);
+        }else{
+            jpfSenha.setEchoChar('*');
+            jpfConfirmacao.setEchoChar('*');
+        }
+    }//GEN-LAST:event_jcdMostrarSenhaActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel11;
@@ -964,6 +1033,7 @@ public class GUICadManuLogin extends javax.swing.JInternalFrame {
     private javax.swing.JButton jbtnPromover;
     private javax.swing.JButton jbtnRebaixar;
     private javax.swing.JComboBox<String> jcbPerfil;
+    private javax.swing.JCheckBox jcdMostrarSenha;
     private javax.swing.JPasswordField jpfConfirmacao;
     private javax.swing.JPasswordField jpfSenha;
     private javax.swing.JPasswordField jpfSenhaAtual;

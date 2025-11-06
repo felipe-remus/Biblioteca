@@ -201,23 +201,27 @@
                               <Component id="jLabelSenhaAtual" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
                               <Component id="jpfSenhaAtual" min="-2" pref="196" max="-2" attributes="0"/>
-                              <EmptySpace pref="151" max="32767" attributes="0"/>
+                              <EmptySpace pref="171" max="32767" attributes="0"/>
                               <Component id="jcbPerfil" min="-2" pref="200" max="-2" attributes="0"/>
                               <EmptySpace min="-2" pref="56" max="-2" attributes="0"/>
                           </Group>
                           <Group type="102" attributes="0">
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
-                                      <Group type="102" alignment="0" attributes="0">
-                                          <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
-                                          <EmptySpace max="-2" attributes="0"/>
-                                          <Component id="jtfLogin" min="-2" pref="225" max="-2" attributes="0"/>
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <Group type="103" groupAlignment="1" max="-2" attributes="0">
+                                          <Group type="102" alignment="0" attributes="0">
+                                              <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
+                                              <EmptySpace max="-2" attributes="0"/>
+                                              <Component id="jtfLogin" min="-2" pref="225" max="-2" attributes="0"/>
+                                          </Group>
+                                          <Group type="102" alignment="0" attributes="0">
+                                              <Component id="jLabel14" min="-2" max="-2" attributes="0"/>
+                                              <EmptySpace max="-2" attributes="0"/>
+                                              <Component id="jpfSenha" max="32767" attributes="0"/>
+                                          </Group>
                                       </Group>
-                                      <Group type="102" alignment="0" attributes="0">
-                                          <Component id="jLabel14" min="-2" max="-2" attributes="0"/>
-                                          <EmptySpace max="-2" attributes="0"/>
-                                          <Component id="jpfSenha" max="32767" attributes="0"/>
-                                      </Group>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Component id="jcdMostrarSenha" min="-2" max="-2" attributes="0"/>
                                   </Group>
                                   <Group type="102" alignment="0" attributes="0">
                                       <Component id="jLabel15" min="-2" max="-2" attributes="0"/>
@@ -225,7 +229,7 @@
                                       <Component id="jpfConfirmacao" min="-2" pref="208" max="-2" attributes="0"/>
                                   </Group>
                               </Group>
-                              <EmptySpace max="32767" attributes="0"/>
+                              <EmptySpace pref="248" max="32767" attributes="0"/>
                           </Group>
                       </Group>
                   </Group>
@@ -256,6 +260,7 @@
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="jLabel14" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="jpfSenha" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="jcdMostrarSenha" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
@@ -335,6 +340,20 @@
                   <Font name="Segoe UI" size="18" style="0"/>
                 </Property>
               </Properties>
+            </Component>
+            <Component class="javax.swing.JCheckBox" name="jcdMostrarSenha">
+              <Properties>
+                <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                  <Color blue="28" green="28" red="28" type="rgb"/>
+                </Property>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                  <Font name="Arial" size="12" style="0"/>
+                </Property>
+                <Property name="text" type="java.lang.String" value="Mostrar Senha"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jcdMostrarSenhaActionPerformed"/>
+              </Events>
             </Component>
           </SubComponents>
         </Container>

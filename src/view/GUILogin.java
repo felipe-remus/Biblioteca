@@ -229,13 +229,6 @@ public class GUILogin extends javax.swing.JFrame {
         try {
             boolean primeiraExecucao = isPrimeiraExecucao();
 
-            if (primeiraExecucao) {
-                JOptionPane.showMessageDialog(this, 
-                    "Bem-vindo! Crie o primeiro usuário do sistema como Administrador.",
-                    "Primeira Configuração",
-                    JOptionPane.INFORMATION_MESSAGE);
-            }
-
             // ✅ Abre o Menu Principal Especial
             GUIMenuPrincipalEspecial menuEspecial = new GUIMenuPrincipalEspecial(this, primeiraExecucao);
             menuEspecial.setVisible(true);
