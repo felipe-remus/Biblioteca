@@ -15,6 +15,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import javax.swing.JInternalFrame;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.table.DefaultTableModel;
@@ -41,6 +42,17 @@ public class GUICadManuLogin extends javax.swing.JInternalFrame {
     private String loginInicial = null;
     private boolean abertoPorAdmin = false;
     private int idLoginEmEdicao = -1;
+    
+    // Nova constante para identificar origem
+    public static final int ORIGEM_LOGIN = 1;
+    public static final int ORIGEM_MENU = 2;
+
+    private int origemChamada = ORIGEM_MENU; // padrão
+    private GUILogin guiLoginOrigem = null;
+
+    // Campos adicionai
+    private int perfilFixo = -1;
+    private boolean perfilEditavel = true;
     
     DefaultTableModel dtm = new DefaultTableModel(
             new Object [][]{},
@@ -87,18 +99,10 @@ public class GUICadManuLogin extends javax.swing.JInternalFrame {
         configurarInterface();
     }
     
-    // Nova constante para identificar origem
-    public static final int ORIGEM_LOGIN = 1;
-    public static final int ORIGEM_MENU = 2;
-
-    private int origemChamada = ORIGEM_MENU; // padrão
-    private GUILogin guiLoginOrigem = null;
-
-    // ✅ Construtor atualizado para receber origem
-    public GUICadManuLogin(GUILogin guiLogin, int perfilFixo, int origem) {
+    // Construtor para modo especial (primeiro acesso ou cliente)
+    public GUICadManuLogin(GUIMenuPrincipalEspecial menuEspecial, int perfilFixo, boolean modoEspecial) {
         this();
-        this.guiLoginOrigem = guiLogin;
-        this.origemChamada = origem;
+        this.menuPrincipal = menuEspecial;
         this.loginInicial = "";
         this.modoOperacao = MODO_CADASTRO_GENERICO;
         this.perfilFixo = perfilFixo;
@@ -109,11 +113,15 @@ public class GUICadManuLogin extends javax.swing.JInternalFrame {
         } else if (perfilFixo == 1) {
             configurarParaCliente();
         }
-    }
 
-    // Campos adicionais
-    private int perfilFixo = -1;
-    private boolean perfilEditavel = true;
+        // Remove aba de gerenciamento no modo especial
+        if (jTabbedPane1.getTabCount() > 1) {
+            jTabbedPane1.removeTabAt(1);
+        }
+
+        // Configura ação de fechamento para voltar ao login
+        setDefaultCloseOperation(JInternalFrame.DISPOSE_ON_CLOSE);
+    }
    
     private void configurarInterface() {
         restaurarPerfilComboBox();
@@ -173,6 +181,10 @@ public class GUICadManuLogin extends javax.swing.JInternalFrame {
         jcbPerfil.setEnabled(false);
         jpfSenhaAtual.setVisible(true);
         jLabelSenhaAtual.setVisible(true);
+        jbtnDeletar4.setVisible(false);
+        jbtnLimpar4.setVisible(false);
+        jbtnPromover.setVisible(false);
+        jbtnRebaixar.setVisible(false);
     }
     
     private void configurarModoCadastroGenerico() {
@@ -194,6 +206,10 @@ public class GUICadManuLogin extends javax.swing.JInternalFrame {
     private void configurarParaPrimeiroAcesso() {
     setTitle("Primeiro Acesso - Criar Administrador");
     jbtnCadastrar.setText("Criar Administrador");
+    jbtnDeletar4.setVisible(false);
+    jbtnLimpar4.setVisible(false);
+    jbtnPromover.setVisible(false);
+    jbtnRebaixar.setVisible(false);
     
     // Força perfil Admin
     selecionarPerfilPorId(3);
@@ -211,6 +227,10 @@ public class GUICadManuLogin extends javax.swing.JInternalFrame {
     private void configurarParaCliente() {
         setTitle("Cadastro de Cliente");
         jbtnCadastrar.setText("Criar Conta");
+        jbtnDeletar4.setVisible(false);
+        jbtnLimpar4.setVisible(false);
+        jbtnPromover.setVisible(false);
+        jbtnRebaixar.setVisible(false);
 
         // Força perfil Cliente
         selecionarPerfilPorId(1);
@@ -360,7 +380,7 @@ public class GUICadManuLogin extends javax.swing.JInternalFrame {
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel2.setText("Login:");
+        jLabel2.setText("Email: (Login)");
 
         jtfLogin.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
 
@@ -596,12 +616,12 @@ public class GUICadManuLogin extends javax.swing.JInternalFrame {
 
         JOptionPane.showMessageDialog(this, mensagem);
         
-        if (origemChamada == ORIGEM_LOGIN && guiLoginOrigem != null) {
-            // Volta para a tela de login
+        // ✅ Fecha e volta para login no modo especial
+        if (menuPrincipal instanceof GUIMenuPrincipalEspecial) {
+            ((GUIMenuPrincipalEspecial) menuPrincipal).voltarParaLogin();
+        } else if (origemChamada == ORIGEM_LOGIN && guiLoginOrigem != null) {
             guiLoginOrigem.setVisible(true);
             guiLoginOrigem.toFront();
-        } else {
-            // Fecha apenas esta janela (comportamento normal)
         }
         dispose();
     }
@@ -679,9 +699,12 @@ public class GUICadManuLogin extends javax.swing.JInternalFrame {
             ArrayList<LoginVO> logins = ls.buscarTodosLogins();
 
             for (LoginVO l : logins) {
-                // Não mostrar o próprio admin na lista (evita auto-exclusão)
-                if (l.getIdLogin() == SessaoUsuario.getUsuarioLogado().getIdLogin()) {
-                    continue;
+                // ✅ Verifica se há usuário logado antes de comparar
+                if (SessaoUsuario.isUsuarioLogado()) {
+                    int idUsuarioLogado = SessaoUsuario.getUsuarioLogado().getIdLogin();
+                    if (l.getIdLogin() == idUsuarioLogado) {
+                        continue; // Não mostra o próprio usuário
+                    }
                 }
 
                 String nomePerfil = getNomePerfil(l.getPerfil());
@@ -885,14 +908,12 @@ public class GUICadManuLogin extends javax.swing.JInternalFrame {
     private void jbtnCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnCadastrarActionPerformed
         salvarLogin();
         limpar();
-        preencherTabela();
     }//GEN-LAST:event_jbtnCadastrarActionPerformed
 
     private void jbtnCadastrarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jbtnCadastrarKeyPressed
         if(evt.getKeyCode() == KeyEvent.VK_ENTER){
             salvarLogin();
             limpar();
-            preencherTabela();
         }
     }//GEN-LAST:event_jbtnCadastrarKeyPressed
 

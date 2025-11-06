@@ -36,6 +36,14 @@ public class SessaoUsuario {
         return false;
     }
     
+    // ✅ Método para verificar se o usuário logado é cliente (perfil ID = 1)
+    public static boolean isCliente() {
+        if (isUsuarioLogado()) {
+            return usuarioLogado.getPerfil() == 1;
+        }
+        return false;
+    }
+    
     // Método para limpar a sessão (ex: ao sair do sistema)
     public static void limparSessao() {
         usuarioLogado = null;

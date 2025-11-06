@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Vector;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import model.LoginVO;
 import services.LoginServicos;
@@ -26,7 +27,7 @@ public class GUILogin extends javax.swing.JFrame {
     private boolean modoCliente = false;
 
     /**
-     * Creates new form GUILogin2
+     * Creates new form GUILogin
      */
     public GUILogin() {
         initComponents();
@@ -225,24 +226,25 @@ public class GUILogin extends javax.swing.JFrame {
     }
     
     private void abrirCadastroLogin() {
-        boolean primeiraExecucao = isPrimeiraExecucao();
+        try {
+            boolean primeiraExecucao = isPrimeiraExecucao();
 
-        if (primeiraExecucao) {
-            JOptionPane.showMessageDialog(this, 
-                "Bem-vindo! Crie o primeiro usuário do sistema como Administrador.",
-                "Primeira Configuração",
-                JOptionPane.INFORMATION_MESSAGE);
+            if (primeiraExecucao) {
+                JOptionPane.showMessageDialog(this, 
+                    "Bem-vindo! Crie o primeiro usuário do sistema como Administrador.",
+                    "Primeira Configuração",
+                    JOptionPane.INFORMATION_MESSAGE);
+            }
 
-            // ✅ Passa a origem como ORIGEM_LOGIN
-            GUICadManuLogin cadastro = new GUICadManuLogin(this, 3, GUICadManuLogin.ORIGEM_LOGIN);
-            cadastro.setVisible(true);
-            this.setVisible(false); // Esconde a tela de login
+            // ✅ Abre o Menu Principal Especial
+            GUIMenuPrincipalEspecial menuEspecial = new GUIMenuPrincipalEspecial(this, primeiraExecucao);
+            menuEspecial.setVisible(true);
+            menuEspecial.setExtendedState(JFrame.MAXIMIZED_BOTH);
+            this.setVisible(false);
 
-        } else {
-            // ✅ Passa a origem como ORIGEM_LOGIN
-            GUICadManuLogin cadastro = new GUICadManuLogin(this, 1, GUICadManuLogin.ORIGEM_LOGIN);
-            cadastro.setVisible(true);
-            this.setVisible(false); // Esconde a tela de login
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Erro ao abrir cadastro: " + e.getMessage());
+            e.printStackTrace();
         }
     }
     

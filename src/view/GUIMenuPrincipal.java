@@ -27,6 +27,7 @@ import view.GUIEmprestimo;
 import view.GUIFuncionario;
 import view.GUIGenero;
 import view.GUILivro;
+import view.GUILogin;
 import view.GUIReserva;
 
 /**
@@ -271,6 +272,10 @@ public class GUIMenuPrincipal extends javax.swing.JFrame implements InternalFram
     }// </editor-fold>//GEN-END:initComponents
 
     private void abrirGUIClientes(){
+        if (SessaoUsuario.isCliente()) {
+            JOptionPane.showMessageDialog(this, "Acesso restrito a funcionários e administradores.");
+            return;
+        }
         if(!flagGUICliente){
             GUICliente gcc = new GUICliente();
             jdpAreaDeTrabalho.add(gcc);
@@ -279,8 +284,12 @@ public class GUIMenuPrincipal extends javax.swing.JFrame implements InternalFram
             gcc.addInternalFrameListener(this);
         }
     } 
-    
+
     private void abrirGUIFuncionario(){
+        if (SessaoUsuario.isCliente()) {
+            JOptionPane.showMessageDialog(this, "Acesso restrito a funcionários e administradores.");
+            return;
+        }
         if(!flagGUIFuncionario){
             GUIFuncionario gcf = new GUIFuncionario(this);
             jdpAreaDeTrabalho.add(gcf);
@@ -289,18 +298,12 @@ public class GUIMenuPrincipal extends javax.swing.JFrame implements InternalFram
             gcf.addInternalFrameListener(this);
         }
     }
-    
-    private void abrirGUILivro(){
-        if(!flagGUILivro){
-            GUILivro gcl = new GUILivro(this);
-            jdpAreaDeTrabalho.add(gcl);
-            gcl.setVisible(true);
-            flagGUILivro = true;
-            gcl.addInternalFrameListener(this);
-        }
-    }
-    
+
     public void abrirGUIAutor(){
+        if (SessaoUsuario.isCliente()) {
+            JOptionPane.showMessageDialog(this, "Acesso restrito a funcionários e administradores.");
+            return;
+        }
         if(!flagGUIAutor){
             GUIAutor gca = new GUIAutor();
             jdpAreaDeTrabalho.add(gca);
@@ -309,8 +312,12 @@ public class GUIMenuPrincipal extends javax.swing.JFrame implements InternalFram
             gca.addInternalFrameListener(this);
         }
     }
-    
+
     public void abrirGUIGenero(){
+        if (SessaoUsuario.isCliente()) {
+            JOptionPane.showMessageDialog(this, "Acesso restrito a funcionários e administradores.");
+            return;
+        }
         if(!flagGUIGenero){
             GUIGenero gcg = new GUIGenero();
             jdpAreaDeTrabalho.add(gcg);
@@ -319,8 +326,12 @@ public class GUIMenuPrincipal extends javax.swing.JFrame implements InternalFram
             gcg.addInternalFrameListener(this);
         }
     }
-    
+
     public void abrirGUIEditora(){
+        if (SessaoUsuario.isCliente()) {
+            JOptionPane.showMessageDialog(this, "Acesso restrito a funcionários e administradores.");
+            return;
+        }
         if(!flagGUIEditora){
             GUIEditora gce = new GUIEditora();
             jdpAreaDeTrabalho.add(gce);
@@ -329,8 +340,12 @@ public class GUIMenuPrincipal extends javax.swing.JFrame implements InternalFram
             gce.addInternalFrameListener(this);
         }       
     }
-    
+
     public void abrirGUIEmprestimo(){
+        if (SessaoUsuario.isCliente()) {
+            JOptionPane.showMessageDialog(this, "Acesso restrito a funcionários e administradores.");
+            return;
+        }
         if(!flagGUIEmprestimo){
             GUIEmprestimo gce = new GUIEmprestimo();
             jdpAreaDeTrabalho.add(gce);
@@ -339,8 +354,12 @@ public class GUIMenuPrincipal extends javax.swing.JFrame implements InternalFram
             gce.addInternalFrameListener(this);
         }       
     }
-    
+
     private void abrirGUIReserva(){
+        if (SessaoUsuario.isCliente()) {
+            JOptionPane.showMessageDialog(this, "Acesso restrito a funcionários e administradores.");
+            return;
+        }
         if(!flagGUIReserva){
             GUIReserva gcr = new GUIReserva(this);
             jdpAreaDeTrabalho.add(gcr);
@@ -349,8 +368,12 @@ public class GUIMenuPrincipal extends javax.swing.JFrame implements InternalFram
             gcr.addInternalFrameListener(this);
         }       
     }
-    
+
     private void abrirGUIDevolucao(){
+        if (SessaoUsuario.isCliente()) {
+            JOptionPane.showMessageDialog(this, "Acesso restrito a funcionários e administradores.");
+            return;
+        }
         if(!flagGUIDevolucao){
             GUIDevolucao gcd = new GUIDevolucao();
             jdpAreaDeTrabalho.add(gcd);
@@ -359,14 +382,37 @@ public class GUIMenuPrincipal extends javax.swing.JFrame implements InternalFram
             gcd.addInternalFrameListener(this);
         }       
     }
-    
+
     public void abrirGUICadManuLogin(){
+//        if (SessaoUsuario.isCliente()) {
+//            JOptionPane.showMessageDialog(this, "Acesso restrito a funcionários e administradores.");
+//            return;
+//        }
         if(!flagGUICadManuLogin){
             GUICadManuLogin gcl = new GUICadManuLogin(this);
             jdpAreaDeTrabalho.add(gcl);
             gcl.setVisible(true);
             flagGUICadManuLogin = true;
             gcl.addInternalFrameListener(this);
+        }
+    }
+    
+    private void abrirGUILivro(){
+        if(!flagGUILivro){
+            // ✅ SEMPRE verifica o perfil e abre no modo apropriado
+            if (SessaoUsuario.isCliente()) {
+                GUILivro guiLivro = new GUILivro(true); // true = modo cliente
+                jdpAreaDeTrabalho.add(guiLivro);
+                guiLivro.setVisible(true);
+                flagGUILivro = true;
+                guiLivro.addInternalFrameListener(this);
+            } else {
+                GUILivro gcl = new GUILivro(this);
+                jdpAreaDeTrabalho.add(gcl);
+                gcl.setVisible(true);
+                flagGUILivro = true;
+                gcl.addInternalFrameListener(this);
+            }
         }
     }
     
@@ -557,7 +603,7 @@ public class GUIMenuPrincipal extends javax.swing.JFrame implements InternalFram
     private javax.swing.JPopupMenu.Separator jSeparator2;
     public javax.swing.JDesktopPane jdpAreaDeTrabalho;
     private javax.swing.JMenu jmCadastro;
-    private javax.swing.JMenuBar jmbMenu;
+    javax.swing.JMenuBar jmbMenu;
     private javax.swing.JMenuItem jniAutor;
     private javax.swing.JMenuItem jniCliente;
     private javax.swing.JMenuItem jniDevolucao;

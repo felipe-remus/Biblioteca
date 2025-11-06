@@ -15,6 +15,7 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.event.InternalFrameEvent;
 import javax.swing.table.DefaultTableModel;
+import util.SessaoUsuario;
 
 /**
  *
@@ -49,8 +50,13 @@ public class GUILivro extends javax.swing.JInternalFrame {
     }
     
     public GUILivro(GUIMenuPrincipal menu) {
-        this(); 
+        this();
         this.menuPrincipal = menu;
+
+        // ✅ Verifica automaticamente se é cliente
+        if (SessaoUsuario.isCliente()) {
+            configurarModoCliente();
+        }
     }
     
     public GUILivro(boolean cliente) {
@@ -496,19 +502,12 @@ public class GUILivro extends javax.swing.JInternalFrame {
         jbtnCadastrar.setVisible(false);
         jbtnAlterar.setVisible(false);
         jbtnDeletar.setVisible(false);
-
-        // ✅ Oculta campos de filtro avançado
-        jcbTipoPesquisa.setVisible(false);
-        jlPesquisa.setVisible(false); // assumindo que você tem esse label
-
-        // ✅ Define filtro padrão como "Disponível"
-        jcbDisponibilidade.setSelectedItem("Disponível");
-        jcbDisponibilidade.setEnabled(false); // trava como "Disponível"
+        jbtnPreencher.setVisible(false);
+        jbtnLimpar.setVisible(false);
 
         // ✅ Atualiza título
         setTitle("Pesquisa de Livros - Cliente");
 
-        // ✅ Recarrega tabela com só livros disponíveis
         preencherTabela();
     }
 
