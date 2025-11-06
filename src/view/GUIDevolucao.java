@@ -56,7 +56,6 @@ public class GUIDevolucao extends javax.swing.JInternalFrame {
         jtDevolucao = new javax.swing.JTable();
         jcbTipoPesquisa = new javax.swing.JComboBox<>();
         jLayeredPane1 = new javax.swing.JLayeredPane();
-        jbtnLimpar = new javax.swing.JButton();
         jbtnDeletar = new javax.swing.JButton();
 
         setClosable(true);
@@ -125,19 +124,6 @@ public class GUIDevolucao extends javax.swing.JInternalFrame {
 
         jTabbedPane1.addTab("Histórico", jPanel2);
 
-        jbtnLimpar.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jbtnLimpar.setText("Limpar");
-        jbtnLimpar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jbtnLimparActionPerformed(evt);
-            }
-        });
-        jbtnLimpar.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                jbtnLimparKeyPressed(evt);
-            }
-        });
-
         jbtnDeletar.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jbtnDeletar.setText("Deletar");
         jbtnDeletar.addActionListener(new java.awt.event.ActionListener() {
@@ -146,7 +132,6 @@ public class GUIDevolucao extends javax.swing.JInternalFrame {
             }
         });
 
-        jLayeredPane1.setLayer(jbtnLimpar, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jLayeredPane1.setLayer(jbtnDeletar, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         javax.swing.GroupLayout jLayeredPane1Layout = new javax.swing.GroupLayout(jLayeredPane1);
@@ -154,9 +139,7 @@ public class GUIDevolucao extends javax.swing.JInternalFrame {
         jLayeredPane1Layout.setHorizontalGroup(
             jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jLayeredPane1Layout.createSequentialGroup()
-                .addGap(154, 154, 154)
-                .addComponent(jbtnLimpar)
-                .addGap(229, 229, 229)
+                .addGap(295, 295, 295)
                 .addComponent(jbtnDeletar)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -164,9 +147,7 @@ public class GUIDevolucao extends javax.swing.JInternalFrame {
             jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jLayeredPane1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jbtnLimpar)
-                    .addComponent(jbtnDeletar))
+                .addComponent(jbtnDeletar)
                 .addContainerGap(19, Short.MAX_VALUE))
         );
 
@@ -198,7 +179,7 @@ public class GUIDevolucao extends javax.swing.JInternalFrame {
 
     private void preencherTabela() {
         try {
-            dtm.setNumRows(0);
+            limpar();
             idsDevolucao.clear(); 
 
             DevolucaoServicos ds = ServicosFactory.getDevolucaoServicos();
@@ -249,7 +230,7 @@ public class GUIDevolucao extends javax.swing.JInternalFrame {
                 DevolucaoServicos ds = ServicosFactory.getDevolucaoServicos();
                 ds.deletarDevolucao(idDevolucao);
                 JOptionPane.showMessageDialog(this, "Devolução excluída com sucesso!");
-                preencherTabela(); // atualiza lista e IDs
+                preencherTabela();
             }
 
         } catch (Exception e) {
@@ -317,16 +298,6 @@ public class GUIDevolucao extends javax.swing.JInternalFrame {
     }
     
     
-    private void jbtnLimparActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnLimparActionPerformed
-        limpar();
-    }//GEN-LAST:event_jbtnLimparActionPerformed
-
-    private void jbtnLimparKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jbtnLimparKeyPressed
-        if(evt.getKeyCode() == KeyEvent.VK_ENTER){
-            limpar();
-        }
-    }//GEN-LAST:event_jbtnLimparKeyPressed
-
     private void jbtnDeletarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnDeletarActionPerformed
         deletarDevolucao();
     }//GEN-LAST:event_jbtnDeletarActionPerformed
@@ -345,7 +316,6 @@ public class GUIDevolucao extends javax.swing.JInternalFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JButton jbtnDeletar;
-    private javax.swing.JButton jbtnLimpar;
     private javax.swing.JComboBox<String> jcbTipoPesquisa;
     private javax.swing.JTable jtDevolucao;
     private javax.swing.JTextField jtfPesquisar;

@@ -166,6 +166,7 @@ public class GUICadManuLogin extends javax.swing.JInternalFrame {
     
     private void configurarModoAlterarPropriosDados() {
         jbtnCadastrar.setText("Salvar Alterações");
+        jbtnCadastrar.setAlignmentX(CENTER_ALIGNMENT);
 
         if (loginInicial != null && !loginInicial.trim().isEmpty()) {
             jtfLogin.setText(loginInicial.trim());
@@ -177,7 +178,6 @@ public class GUICadManuLogin extends javax.swing.JInternalFrame {
         if (usuario != null) {
             selecionarPerfilPorId(usuario.getPerfil());
         }
-
         jcbPerfil.setEnabled(false);
         jpfSenhaAtual.setVisible(true);
         jLabelSenhaAtual.setVisible(true);
@@ -185,6 +185,16 @@ public class GUICadManuLogin extends javax.swing.JInternalFrame {
         jbtnLimpar4.setVisible(false);
         jbtnPromover.setVisible(false);
         jbtnRebaixar.setVisible(false);
+        
+        if(SessaoUsuario.isAdministrador()){
+            jcbPerfil.setEnabled(false);
+            jpfSenhaAtual.setVisible(true);
+            jLabelSenhaAtual.setVisible(true);
+            jbtnDeletar4.setVisible(true);
+            jbtnLimpar4.setVisible(true);
+            jbtnPromover.setVisible(true);
+            jbtnRebaixar.setVisible(true);
+        }
     }
     
     private void configurarModoCadastroGenerico() {
@@ -379,6 +389,8 @@ public class GUICadManuLogin extends javax.swing.JInternalFrame {
         jçTtitulo.setText("Login");
         jçTtitulo.setToolTipText("");
 
+        jPanel1.setForeground(new java.awt.Color(255, 255, 255));
+
         jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel2.setText("Email: (Login)");
@@ -401,7 +413,7 @@ public class GUICadManuLogin extends javax.swing.JInternalFrame {
 
         jpfConfirmacao.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
 
-        jcdMostrarSenha.setBackground(new java.awt.Color(40, 40, 40));
+        jcdMostrarSenha.setBackground(new java.awt.Color(255, 255, 255));
         jcdMostrarSenha.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         jcdMostrarSenha.setText("Mostrar Senha");
         jcdMostrarSenha.addActionListener(new java.awt.event.ActionListener() {

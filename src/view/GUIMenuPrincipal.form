@@ -3,6 +3,9 @@
 <Form version="1.3" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JFrameFormInfo">
   <NonVisualComponents>
     <Menu class="javax.swing.JMenuBar" name="jmbMenu">
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
+      </AuxValues>
       <SubComponents>
         <Menu class="javax.swing.JMenu" name="jmCadastro">
           <Properties>
@@ -11,6 +14,9 @@
           <SubComponents>
             <MenuItem class="javax.swing.JMenuItem" name="jniCliente">
               <Properties>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/img/Cliente.jpg"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="Cliente"/>
               </Properties>
               <Events>
@@ -20,6 +26,9 @@
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="jniFuncionario">
               <Properties>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/img/Funcionario.jpg"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="Funcion&#xe1;rio"/>
               </Properties>
               <Events>
@@ -31,6 +40,9 @@
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="jniLivro">
               <Properties>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/img/Livro.jpg"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="Livro"/>
               </Properties>
               <Events>
@@ -40,6 +52,9 @@
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="jniAutor">
               <Properties>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/img/Autor.jpg"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="Autor"/>
               </Properties>
               <Events>
@@ -49,6 +64,9 @@
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="jniGenero">
               <Properties>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/img/Genero.jpg"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="G&#xea;nero"/>
               </Properties>
               <Events>
@@ -58,6 +76,9 @@
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="jniEditora">
               <Properties>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/img/Editora.jpg"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="Editora"/>
               </Properties>
               <Events>
@@ -69,6 +90,9 @@
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="jniLogin">
               <Properties>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/img/Login.jpg"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="Login"/>
               </Properties>
               <Events>

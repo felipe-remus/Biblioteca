@@ -137,7 +137,7 @@ public class GUIEmprestimo extends javax.swing.JInternalFrame {
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("Emprestímo");
+        jLabel1.setText("Empréstimo");
         jLabel1.setToolTipText("");
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
@@ -747,7 +747,23 @@ public class GUIEmprestimo extends javax.swing.JInternalFrame {
 
             EmprestimoServicos es = ServicosFactory.getEmprestimoServicos();
             EmprestimoVO eVO = es.buscarEmprestimoPorId(idEmprestimo);
+            
+            if ("Devolvido".equals(eVO.getStatus())) {
+                JOptionPane.showMessageDialog(this, 
+                    "Este empréstimo já foi devolvido!\n",
+                    "Empréstimo já devolvido", 
+                    JOptionPane.WARNING_MESSAGE);
+                return;
+            }
 
+            if (!"Nao Devolvido".equals(eVO.getStatus())) {
+                JOptionPane.showMessageDialog(this, 
+                    "Status do empréstimo não permite devolução: " + eVO.getStatus(), 
+                    "Status inválido", 
+                    JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+        
             java.sql.Date dtDevolucao = new java.sql.Date(System.currentTimeMillis());
             double multa = 0.0;
 
@@ -774,8 +790,6 @@ public class GUIEmprestimo extends javax.swing.JInternalFrame {
     }
     
     private void limpar() {
-        jtfPrazo.setText(null);
-        jtfRetirada.setText(null);
         jtfCliente.setText(null);
         jtfLivro.setText(null);
         carregarListasIniciais();
@@ -785,7 +799,7 @@ public class GUIEmprestimo extends javax.swing.JInternalFrame {
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
         jtfRetirada.setText(sdf.format(new Date()));
         jtfRetirada.setEditable(false);
-
+        jtfPrazo.setText(getDataPrazoPadrao());
     }
     
     private void carregarClientes(String filtro) {
