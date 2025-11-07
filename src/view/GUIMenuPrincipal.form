@@ -4,9 +4,6 @@
   <NonVisualComponents>
     <Menu class="javax.swing.JMenuBar" name="jmbMenu">
       <Properties>
-        <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-          <Color blue="ff" green="ff" red="ff" type="rgb"/>
-        </Property>
         <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
           <Border info="null"/>
         </Property>
@@ -18,22 +15,16 @@
       <SubComponents>
         <Menu class="javax.swing.JMenu" name="jmCadastro">
           <Properties>
-            <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-              <Color blue="ff" green="ff" red="ff" type="rgb"/>
-            </Property>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/img/Cad e Manu.jpg"/>
+              <Image iconType="3" name="/img/Cad e Manu.png"/>
             </Property>
             <Property name="text" type="java.lang.String" value="Cadastro e Manuten&#xe7;&#xe3;o"/>
           </Properties>
           <SubComponents>
             <MenuItem class="javax.swing.JMenuItem" name="jniCliente">
               <Properties>
-                <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                  <Color blue="ff" green="ff" red="ff" type="rgb"/>
-                </Property>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/img/Cliente.jpg"/>
+                  <Image iconType="3" name="/img/Cliente.png"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Cliente"/>
               </Properties>
@@ -45,7 +36,7 @@
             <MenuItem class="javax.swing.JMenuItem" name="jniFuncionario">
               <Properties>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/img/Funcionario.jpg"/>
+                  <Image iconType="3" name="/img/Funcionario.png"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Funcion&#xe1;rio"/>
               </Properties>
@@ -59,7 +50,7 @@
             <MenuItem class="javax.swing.JMenuItem" name="jniLivro">
               <Properties>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/img/Livro.jpg"/>
+                  <Image iconType="3" name="/img/Livro.png"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Livro"/>
               </Properties>
@@ -71,7 +62,7 @@
             <MenuItem class="javax.swing.JMenuItem" name="jniAutor">
               <Properties>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/img/Autor.jpg"/>
+                  <Image iconType="3" name="/img/Autor.png"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Autor"/>
               </Properties>
@@ -83,7 +74,7 @@
             <MenuItem class="javax.swing.JMenuItem" name="jniGenero">
               <Properties>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/img/Genero.jpg"/>
+                  <Image iconType="3" name="/img/Genero.png"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="G&#xea;nero"/>
               </Properties>
@@ -95,7 +86,7 @@
             <MenuItem class="javax.swing.JMenuItem" name="jniEditora">
               <Properties>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/img/Editora.jpg"/>
+                  <Image iconType="3" name="/img/Editora.png"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Editora"/>
               </Properties>
@@ -109,7 +100,7 @@
             <MenuItem class="javax.swing.JMenuItem" name="jniLogin">
               <Properties>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/img/Login.jpg"/>
+                  <Image iconType="3" name="/img/Login.png"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Login"/>
               </Properties>
@@ -123,7 +114,7 @@
         <Menu class="javax.swing.JMenu" name="jMenu1">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/img/Gerenciamento.jpg"/>
+              <Image iconType="3" name="/img/Gerenciamento.png"/>
             </Property>
             <Property name="text" type="java.lang.String" value="Gerenciamento"/>
           </Properties>
@@ -131,7 +122,7 @@
             <MenuItem class="javax.swing.JMenuItem" name="jniEmprestimo">
               <Properties>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/img/Empr&#xe9;stimo.jpg"/>
+                  <Image iconType="3" name="/img/Emprestimo.png"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Empr&#xe9;stimo"/>
               </Properties>
@@ -143,7 +134,7 @@
             <MenuItem class="javax.swing.JMenuItem" name="jniReserva">
               <Properties>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/img/Reserva.jpg"/>
+                  <Image iconType="3" name="/img/Reserva.png"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Reserva"/>
               </Properties>
@@ -155,7 +146,7 @@
             <MenuItem class="javax.swing.JMenuItem" name="jniDevolucao">
               <Properties>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/img/Devolu&#xe7;&#xe3;o.jpg"/>
+                  <Image iconType="3" name="/img/Devolucao.png"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Devolu&#xe7;&#xe3;o"/>
               </Properties>
@@ -169,7 +160,7 @@
         <Menu class="javax.swing.JMenu" name="jMenu2">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/img/Sair.jpg"/>
+              <Image iconType="3" name="/img/Sair.png"/>
             </Property>
             <Property name="text" type="java.lang.String" value="Sair"/>
           </Properties>
@@ -235,7 +226,7 @@
         </DimensionLayout>
         <DimensionLayout dim="1">
           <Group type="103" groupAlignment="0" attributes="0">
-              <EmptySpace min="0" pref="439" max="32767" attributes="0"/>
+              <EmptySpace min="0" pref="320" max="32767" attributes="0"/>
           </Group>
         </DimensionLayout>
       </Layout>

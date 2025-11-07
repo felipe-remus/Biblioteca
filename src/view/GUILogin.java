@@ -32,7 +32,7 @@ public class GUILogin extends javax.swing.JFrame {
     public GUILogin() {
         initComponents();
         
-        setIconImage(new javax.swing.ImageIcon(getClass().getResource("/img/Biblioteca.jpg")).getImage());
+        setIconImage(new javax.swing.ImageIcon(getClass().getResource("/img/Biblioteca.png")).getImage());
         
         restaurarPerfilComboBox();
     }
@@ -78,6 +78,7 @@ public class GUILogin extends javax.swing.JFrame {
         });
 
         jbtnCadastrar.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
+        jbtnCadastrar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/Cadastrar.png"))); // NOI18N
         jbtnCadastrar.setText("Cadastrar");
         jbtnCadastrar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -126,7 +127,7 @@ public class GUILogin extends javax.swing.JFrame {
             .addGroup(jPanelLayout.createSequentialGroup()
                 .addGroup(jPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanelLayout.createSequentialGroup()
-                        .addContainerGap(439, Short.MAX_VALUE)
+                        .addContainerGap(403, Short.MAX_VALUE)
                         .addComponent(jbtnLogar)
                         .addGap(71, 71, 71)
                         .addComponent(jbtnCadastrar)

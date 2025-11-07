@@ -59,7 +59,7 @@ public class GUIMenuPrincipal extends javax.swing.JFrame implements InternalFram
     public GUIMenuPrincipal() {
         initComponents();
         
-        setIconImage(new javax.swing.ImageIcon(getClass().getResource("/img/Menu.jpg")).getImage());
+        setIconImage(new javax.swing.ImageIcon(getClass().getResource("/img/Menu.png")).getImage());
         
         setExtendedState(MAXIMIZED_BOTH);
     }
@@ -102,19 +102,16 @@ public class GUIMenuPrincipal extends javax.swing.JFrame implements InternalFram
         );
         jdpAreaDeTrabalhoLayout.setVerticalGroup(
             jdpAreaDeTrabalhoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 439, Short.MAX_VALUE)
+            .addGap(0, 320, Short.MAX_VALUE)
         );
 
-        jmbMenu.setBackground(new java.awt.Color(255, 255, 255));
         jmbMenu.setBorder(null);
         jmbMenu.setName(""); // NOI18N
 
-        jmCadastro.setBackground(new java.awt.Color(255, 255, 255));
-        jmCadastro.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/Cad e Manu.jpg"))); // NOI18N
+        jmCadastro.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/Cad e Manu.png"))); // NOI18N
         jmCadastro.setText("Cadastro e Manutenção");
 
-        jniCliente.setBackground(new java.awt.Color(255, 255, 255));
-        jniCliente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/Cliente.jpg"))); // NOI18N
+        jniCliente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/Cliente.png"))); // NOI18N
         jniCliente.setText("Cliente");
         jniCliente.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -128,7 +125,7 @@ public class GUIMenuPrincipal extends javax.swing.JFrame implements InternalFram
         });
         jmCadastro.add(jniCliente);
 
-        jniFuncionario.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/Funcionario.jpg"))); // NOI18N
+        jniFuncionario.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/Funcionario.png"))); // NOI18N
         jniFuncionario.setText("Funcionário");
         jniFuncionario.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -143,7 +140,7 @@ public class GUIMenuPrincipal extends javax.swing.JFrame implements InternalFram
         jmCadastro.add(jniFuncionario);
         jmCadastro.add(jSeparator1);
 
-        jniLivro.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/Livro.jpg"))); // NOI18N
+        jniLivro.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/Livro.png"))); // NOI18N
         jniLivro.setText("Livro");
         jniLivro.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -157,7 +154,7 @@ public class GUIMenuPrincipal extends javax.swing.JFrame implements InternalFram
         });
         jmCadastro.add(jniLivro);
 
-        jniAutor.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/Autor.jpg"))); // NOI18N
+        jniAutor.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/Autor.png"))); // NOI18N
         jniAutor.setText("Autor");
         jniAutor.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -171,7 +168,7 @@ public class GUIMenuPrincipal extends javax.swing.JFrame implements InternalFram
         });
         jmCadastro.add(jniAutor);
 
-        jniGenero.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/Genero.jpg"))); // NOI18N
+        jniGenero.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/Genero.png"))); // NOI18N
         jniGenero.setText("Gênero");
         jniGenero.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -185,7 +182,7 @@ public class GUIMenuPrincipal extends javax.swing.JFrame implements InternalFram
         });
         jmCadastro.add(jniGenero);
 
-        jniEditora.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/Editora.jpg"))); // NOI18N
+        jniEditora.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/Editora.png"))); // NOI18N
         jniEditora.setText("Editora");
         jniEditora.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -200,7 +197,7 @@ public class GUIMenuPrincipal extends javax.swing.JFrame implements InternalFram
         jmCadastro.add(jniEditora);
         jmCadastro.add(jSeparator2);
 
-        jniLogin.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/Login.jpg"))); // NOI18N
+        jniLogin.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/Login.png"))); // NOI18N
         jniLogin.setText("Login");
         jniLogin.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -216,10 +213,10 @@ public class GUIMenuPrincipal extends javax.swing.JFrame implements InternalFram
 
         jmbMenu.add(jmCadastro);
 
-        jMenu1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/Gerenciamento.jpg"))); // NOI18N
+        jMenu1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/Gerenciamento.png"))); // NOI18N
         jMenu1.setText("Gerenciamento");
 
-        jniEmprestimo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/Empréstimo.jpg"))); // NOI18N
+        jniEmprestimo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/Emprestimo.png"))); // NOI18N
         jniEmprestimo.setText("Empréstimo");
         jniEmprestimo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -233,7 +230,7 @@ public class GUIMenuPrincipal extends javax.swing.JFrame implements InternalFram
         });
         jMenu1.add(jniEmprestimo);
 
-        jniReserva.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/Reserva.jpg"))); // NOI18N
+        jniReserva.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/Reserva.png"))); // NOI18N
         jniReserva.setText("Reserva");
         jniReserva.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -247,7 +244,7 @@ public class GUIMenuPrincipal extends javax.swing.JFrame implements InternalFram
         });
         jMenu1.add(jniReserva);
 
-        jniDevolucao.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/Devolução.jpg"))); // NOI18N
+        jniDevolucao.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/Devolucao.png"))); // NOI18N
         jniDevolucao.setText("Devolução");
         jniDevolucao.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -263,7 +260,7 @@ public class GUIMenuPrincipal extends javax.swing.JFrame implements InternalFram
 
         jmbMenu.add(jMenu1);
 
-        jMenu2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/Sair.jpg"))); // NOI18N
+        jMenu2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/Sair.png"))); // NOI18N
         jMenu2.setText("Sair");
         jMenu2.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
