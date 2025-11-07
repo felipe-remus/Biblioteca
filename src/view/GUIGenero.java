@@ -69,9 +69,11 @@ public class GUIGenero extends javax.swing.JInternalFrame {
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/Genero.jpg"))); // NOI18N
         jLabel1.setText("Gênero");
         jLabel1.setToolTipText("");
 
+        jbtnCadastrar.setBackground(new java.awt.Color(255, 195, 66));
         jbtnCadastrar.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jbtnCadastrar.setText("Cadastrar");
         jbtnCadastrar.addActionListener(new java.awt.event.ActionListener() {
@@ -85,6 +87,7 @@ public class GUIGenero extends javax.swing.JInternalFrame {
             }
         });
 
+        jbtnLimpar.setBackground(new java.awt.Color(255, 195, 66));
         jbtnLimpar.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jbtnLimpar.setText("Limpar");
         jbtnLimpar.addActionListener(new java.awt.event.ActionListener() {
@@ -98,6 +101,7 @@ public class GUIGenero extends javax.swing.JInternalFrame {
             }
         });
 
+        jbtnAlterar.setBackground(new java.awt.Color(255, 195, 66));
         jbtnAlterar.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jbtnAlterar.setText("Alterar");
         jbtnAlterar.addActionListener(new java.awt.event.ActionListener() {
@@ -106,6 +110,7 @@ public class GUIGenero extends javax.swing.JInternalFrame {
             }
         });
 
+        jbtnDeletar.setBackground(new java.awt.Color(255, 195, 66));
         jbtnDeletar.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jbtnDeletar.setText("Deletar");
         jbtnDeletar.addActionListener(new java.awt.event.ActionListener() {
@@ -114,6 +119,7 @@ public class GUIGenero extends javax.swing.JInternalFrame {
             }
         });
 
+        jbtnPreencher.setBackground(new java.awt.Color(255, 195, 66));
         jbtnPreencher.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jbtnPreencher.setText("Preencher");
         jbtnPreencher.addActionListener(new java.awt.event.ActionListener() {
@@ -148,7 +154,7 @@ public class GUIGenero extends javax.swing.JInternalFrame {
                 .addComponent(jbtnAlterar)
                 .addGap(18, 18, 18)
                 .addComponent(jbtnDeletar)
-                .addGap(79, 79, 79))
+                .addGap(73, 73, 73))
         );
         jLayeredPane1Layout.setVerticalGroup(
             jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -163,6 +169,8 @@ public class GUIGenero extends javax.swing.JInternalFrame {
                 .addContainerGap(19, Short.MAX_VALUE))
         );
 
+        jPanel1.setBackground(new java.awt.Color(255, 195, 66));
+
         jLabel5.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel5.setText("Nome do Gênero:");
@@ -175,23 +183,25 @@ public class GUIGenero extends javax.swing.JInternalFrame {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(123, 123, 123)
                 .addComponent(jLabel5)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jtfGenero, javax.swing.GroupLayout.PREFERRED_SIZE, 255, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(267, Short.MAX_VALUE))
+                .addContainerGap(150, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(140, 140, 140)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(118, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
                     .addComponent(jtfGenero, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(88, Short.MAX_VALUE))
+                .addGap(105, 105, 105))
         );
 
         jTabbedPane1.addTab("Cadastro", jPanel1);
+
+        jPanel2.setBackground(new java.awt.Color(255, 195, 66));
 
         jLabel11.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel11.setText("Nome:");
@@ -227,7 +237,7 @@ public class GUIGenero extends javax.swing.JInternalFrame {
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jLabel11)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jtfPesquisar, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jtfPesquisar)
                         .addContainerGap())))
         );
         jPanel2Layout.setVerticalGroup(
@@ -238,7 +248,7 @@ public class GUIGenero extends javax.swing.JInternalFrame {
                     .addComponent(jLabel11)
                     .addComponent(jtfPesquisar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 202, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 197, Short.MAX_VALUE)
                 .addContainerGap())
         );
 

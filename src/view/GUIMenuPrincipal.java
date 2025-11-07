@@ -4,17 +4,19 @@
  */
 package view;
 
+import java.awt.Color;
 import java.awt.event.KeyEvent;
+import java.awt.image.BufferedImage;
 import javax.swing.JDesktopPane;
 import javax.swing.JFrame;
 import javax.swing.JInternalFrame;
 import javax.swing.JMenu;
-import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 import javax.swing.event.InternalFrameAdapter;
 import javax.swing.event.InternalFrameEvent;
 import javax.swing.event.InternalFrameListener;
+
 import model.ClienteVO;
 import model.LivroVO;
 import model.LoginVO;
@@ -56,7 +58,9 @@ public class GUIMenuPrincipal extends javax.swing.JFrame implements InternalFram
      */
     public GUIMenuPrincipal() {
         initComponents();
-
+        
+        setIconImage(new javax.swing.ImageIcon(getClass().getResource("/img/Menu.jpg")).getImage());
+        
         setExtendedState(MAXIMIZED_BOTH);
     }
     
@@ -88,21 +92,28 @@ public class GUIMenuPrincipal extends javax.swing.JFrame implements InternalFram
         jMenu2 = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("NOME BIBLIOTECA");
+        setTitle("Menu Principal");
 
         javax.swing.GroupLayout jdpAreaDeTrabalhoLayout = new javax.swing.GroupLayout(jdpAreaDeTrabalho);
         jdpAreaDeTrabalho.setLayout(jdpAreaDeTrabalhoLayout);
         jdpAreaDeTrabalhoLayout.setHorizontalGroup(
             jdpAreaDeTrabalhoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 376, Short.MAX_VALUE)
+            .addGap(0, 523, Short.MAX_VALUE)
         );
         jdpAreaDeTrabalhoLayout.setVerticalGroup(
             jdpAreaDeTrabalhoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 351, Short.MAX_VALUE)
+            .addGap(0, 439, Short.MAX_VALUE)
         );
 
+        jmbMenu.setBackground(new java.awt.Color(255, 255, 255));
+        jmbMenu.setBorder(null);
+        jmbMenu.setName(""); // NOI18N
+
+        jmCadastro.setBackground(new java.awt.Color(255, 255, 255));
+        jmCadastro.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/Cad e Manu.jpg"))); // NOI18N
         jmCadastro.setText("Cadastro e Manutenção");
 
+        jniCliente.setBackground(new java.awt.Color(255, 255, 255));
         jniCliente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/Cliente.jpg"))); // NOI18N
         jniCliente.setText("Cliente");
         jniCliente.addActionListener(new java.awt.event.ActionListener() {
@@ -205,8 +216,10 @@ public class GUIMenuPrincipal extends javax.swing.JFrame implements InternalFram
 
         jmbMenu.add(jmCadastro);
 
+        jMenu1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/Gerenciamento.jpg"))); // NOI18N
         jMenu1.setText("Gerenciamento");
 
+        jniEmprestimo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/Empréstimo.jpg"))); // NOI18N
         jniEmprestimo.setText("Empréstimo");
         jniEmprestimo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -220,6 +233,7 @@ public class GUIMenuPrincipal extends javax.swing.JFrame implements InternalFram
         });
         jMenu1.add(jniEmprestimo);
 
+        jniReserva.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/Reserva.jpg"))); // NOI18N
         jniReserva.setText("Reserva");
         jniReserva.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -233,6 +247,7 @@ public class GUIMenuPrincipal extends javax.swing.JFrame implements InternalFram
         });
         jMenu1.add(jniReserva);
 
+        jniDevolucao.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/Devolução.jpg"))); // NOI18N
         jniDevolucao.setText("Devolução");
         jniDevolucao.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -248,6 +263,7 @@ public class GUIMenuPrincipal extends javax.swing.JFrame implements InternalFram
 
         jmbMenu.add(jMenu1);
 
+        jMenu2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/Sair.jpg"))); // NOI18N
         jMenu2.setText("Sair");
         jMenu2.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {

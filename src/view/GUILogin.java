@@ -32,6 +32,8 @@ public class GUILogin extends javax.swing.JFrame {
     public GUILogin() {
         initComponents();
         
+        setIconImage(new javax.swing.ImageIcon(getClass().getResource("/img/Biblioteca.jpg")).getImage());
+        
         restaurarPerfilComboBox();
     }
     
@@ -54,9 +56,13 @@ public class GUILogin extends javax.swing.JFrame {
         jpfSenha = new javax.swing.JPasswordField();
         jlLogin = new javax.swing.JLabel();
         jtfLogin = new javax.swing.JTextField();
+        jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("NOME DA BIBLIOTECA");
         setBackground(new java.awt.Color(0, 0, 0));
+
+        jPanel.setBackground(new java.awt.Color(255, 195, 66));
 
         jbtnLogar.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
         jbtnLogar.setText("Logar");
@@ -110,40 +116,52 @@ public class GUILogin extends javax.swing.JFrame {
 
         jtfLogin.setFont(new java.awt.Font("Segoe UI", 0, 48)); // NOI18N
 
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
+        jLabel1.setText("Login - Biblioteca");
+
         javax.swing.GroupLayout jPanelLayout = new javax.swing.GroupLayout(jPanel);
         jPanel.setLayout(jPanelLayout);
         jPanelLayout.setHorizontalGroup(
             jPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelLayout.createSequentialGroup()
-                .addGap(40, 40, 40)
-                .addGroup(jPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(jPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanelLayout.createSequentialGroup()
-                        .addComponent(jlSenha)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jpfSenha, javax.swing.GroupLayout.PREFERRED_SIZE, 900, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addContainerGap(439, Short.MAX_VALUE)
+                        .addComponent(jbtnLogar)
+                        .addGap(71, 71, 71)
+                        .addComponent(jbtnCadastrar)
+                        .addGap(364, 364, 364))
                     .addGroup(jPanelLayout.createSequentialGroup()
-                        .addComponent(jlLogin)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jtfLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 911, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanelLayout.createSequentialGroup()
-                        .addComponent(jcdMostrarSenha)
-                        .addGap(230, 230, 230)
+                        .addContainerGap()
                         .addGroup(jPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanelLayout.createSequentialGroup()
-                                .addComponent(jbtnLogar)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jbtnCadastrar)
-                                .addGap(267, 267, 267))
-                            .addGroup(jPanelLayout.createSequentialGroup()
-                                .addComponent(jlPerfil)
+                                .addComponent(jlSenha)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jcbPerfil, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addContainerGap(103, Short.MAX_VALUE))
+                                .addComponent(jpfSenha))
+                            .addGroup(jPanelLayout.createSequentialGroup()
+                                .addComponent(jlLogin)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jtfLogin))))
+                    .addGroup(jPanelLayout.createSequentialGroup()
+                        .addGap(49, 49, 49)
+                        .addComponent(jcdMostrarSenha)
+                        .addGap(230, 230, 230)
+                        .addComponent(jlPerfil)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jcbPerfil, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
+            .addGroup(jPanelLayout.createSequentialGroup()
+                .addGap(443, 443, 443)
+                .addComponent(jLabel1)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanelLayout.setVerticalGroup(
             jPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelLayout.createSequentialGroup()
-                .addGap(51, 51, 51)
+                .addContainerGap()
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 46, Short.MAX_VALUE)
                 .addGroup(jPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jlLogin)
                     .addComponent(jtfLogin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -151,12 +169,12 @@ public class GUILogin extends javax.swing.JFrame {
                 .addGroup(jPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jlSenha)
                     .addComponent(jpfSenha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(57, 57, 57)
+                .addGap(30, 30, 30)
                 .addGroup(jPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jcdMostrarSenha)
                     .addComponent(jlPerfil)
                     .addComponent(jcbPerfil, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 78, Short.MAX_VALUE)
+                .addGap(56, 56, 56)
                 .addGroup(jPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jbtnLogar)
                     .addComponent(jbtnCadastrar))
@@ -328,6 +346,7 @@ public class GUILogin extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel;
     private javax.swing.JButton jbtnCadastrar;
     private javax.swing.JButton jbtnLogar;
