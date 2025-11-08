@@ -803,6 +803,7 @@ public class GUIEmprestimo extends javax.swing.JInternalFrame {
         jtfRetirada.setText(sdf.format(new Date()));
         jtfRetirada.setEditable(false);
         jtfPrazo.setText(getDataPrazoPadrao());
+        preencherTabela();
     }
     
     private void carregarClientes(String filtro) {

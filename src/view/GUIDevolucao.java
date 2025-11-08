@@ -187,7 +187,6 @@ public class GUIDevolucao extends javax.swing.JInternalFrame {
 
     private void preencherTabela() {
         try {
-            limpar();
             idsDevolucao.clear(); 
 
             DevolucaoServicos ds = ServicosFactory.getDevolucaoServicos();
@@ -238,7 +237,7 @@ public class GUIDevolucao extends javax.swing.JInternalFrame {
                 DevolucaoServicos ds = ServicosFactory.getDevolucaoServicos();
                 ds.deletarDevolucao(idDevolucao);
                 JOptionPane.showMessageDialog(this, "Devolução excluída com sucesso!");
-                preencherTabela();
+                limpar();
             }
 
         } catch (Exception e) {
@@ -308,6 +307,7 @@ public class GUIDevolucao extends javax.swing.JInternalFrame {
     
     private void jbtnDeletarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnDeletarActionPerformed
         deletarDevolucao();
+        preencherTabela();
     }//GEN-LAST:event_jbtnDeletarActionPerformed
 
     private void jtfPesquisarKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtfPesquisarKeyReleased

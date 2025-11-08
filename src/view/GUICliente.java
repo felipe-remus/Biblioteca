@@ -696,6 +696,7 @@ public class GUICliente extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(this, "Erro ao alterar: " + e.getMessage());
         }
     }    
+    
     private void limpar(){
         jtfNome.setText(null);
         jtfTelefone.setText(null);
@@ -709,6 +710,7 @@ public class GUICliente extends javax.swing.JInternalFrame {
         dtm.setNumRows(0);
         jbtnCadastrar.setEnabled(true);
         jbtnAlterar.setEnabled(false);
+        preencherTabela();
     }
     
     private void jtfPesquisarKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtfPesquisarKeyReleased

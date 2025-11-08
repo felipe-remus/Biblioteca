@@ -461,6 +461,7 @@ public class GUIAutor extends javax.swing.JInternalFrame {
         dtm.setNumRows(0);
         jbtnAlterar.setEnabled(false);
         jbtnCadastrar.setEnabled(true);
+        preencherTabela();
     }
     
     private void jbtnLimparActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnLimparActionPerformed

@@ -705,6 +705,7 @@ public class GUIFuncionario extends javax.swing.JInternalFrame {
         dtm.setNumRows(0);
         jbtnAlterar.setEnabled(false);
         jbtnCadastrar.setEnabled(true);
+        preencherTabela();
     }
     
     private void jtfPesquisarKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtfPesquisarKeyReleased

@@ -59,7 +59,6 @@ public class GUILogin extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("NOME DA BIBLIOTECA");
         setBackground(new java.awt.Color(0, 0, 0));
 
         jPanel.setBackground(new java.awt.Color(255, 195, 66));

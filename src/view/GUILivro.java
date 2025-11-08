@@ -906,6 +906,7 @@ public class GUILivro extends javax.swing.JInternalFrame {
         dtm.setNumRows(0);
         jbtnAlterar.setEnabled(false);
         jbtnCadastrar.setEnabled(true);
+        preencherTabela();
     }
 
     private void carregarEditoras(String filtro) {

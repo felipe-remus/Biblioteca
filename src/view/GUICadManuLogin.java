@@ -161,6 +161,11 @@ public class GUICadManuLogin extends javax.swing.JInternalFrame {
         
         jpfSenhaAtual.setVisible(false);
         jLabelSenhaAtual.setVisible(false);
+        jcbPerfil.setEnabled(false);
+        jbtnDeletar4.setVisible(false);
+        jbtnLimpar4.setVisible(false);
+        jbtnPromover.setVisible(false);
+        jbtnRebaixar.setVisible(false);
     }
     
     private void configurarModoAlterarPropriosDados() {

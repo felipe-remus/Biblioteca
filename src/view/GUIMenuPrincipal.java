@@ -404,10 +404,6 @@ public class GUIMenuPrincipal extends javax.swing.JFrame implements InternalFram
     }
 
     public void abrirGUICadManuLogin(){
-//        if (SessaoUsuario.isCliente()) {
-//            JOptionPane.showMessageDialog(this, "Acesso restrito a funcionários e administradores.");
-//            return;
-//        }
         if(!flagGUICadManuLogin){
             GUICadManuLogin gcl = new GUICadManuLogin(this);
             jdpAreaDeTrabalho.add(gcl);
@@ -669,6 +665,8 @@ public class GUIMenuPrincipal extends javax.swing.JFrame implements InternalFram
             flagGUICadManuLogin = false;
         }else if(e.getInternalFrame() instanceof GUICadManuLogin){
             flagMeusDados = false;
+        }else if(e.getInternalFrame() instanceof GUIDevolucao){
+            flagGUIDevolucao = false;
         }
     }
 

@@ -495,6 +495,7 @@ public class GUIEditora extends javax.swing.JInternalFrame {
         dtm.setNumRows(0);
         jbtnAlterar.setEnabled(false);
         jbtnCadastrar.setEnabled(true);
+        preencherTabela();
 
     }
     

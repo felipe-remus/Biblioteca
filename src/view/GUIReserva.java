@@ -747,6 +747,7 @@ public class GUIReserva extends javax.swing.JInternalFrame {
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
         jtfDataReserva.setText(sdf.format(new Date()));
         jtfDataReserva.setEditable(false);
+        preencherTabela();
     }
     
     private void carregarClientes(String filtro) {
