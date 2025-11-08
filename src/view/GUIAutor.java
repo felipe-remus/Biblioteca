@@ -103,7 +103,7 @@ public class GUIAutor extends javax.swing.JInternalFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel5)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jtfSobrenome, javax.swing.GroupLayout.DEFAULT_SIZE, 561, Short.MAX_VALUE)))
+                        .addComponent(jtfSobrenome, javax.swing.GroupLayout.DEFAULT_SIZE, 648, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -154,7 +154,7 @@ public class GUIAutor extends javax.swing.JInternalFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(14, 14, 14)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 662, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 749, Short.MAX_VALUE)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jLabel11)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -179,6 +179,7 @@ public class GUIAutor extends javax.swing.JInternalFrame {
         jbtnCadastrar.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jbtnCadastrar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/Cadastrar.png"))); // NOI18N
         jbtnCadastrar.setText("Cadastrar");
+        jbtnCadastrar.setToolTipText("");
         jbtnCadastrar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jbtnCadastrarActionPerformed(evt);
@@ -192,6 +193,7 @@ public class GUIAutor extends javax.swing.JInternalFrame {
 
         jbtnLimpar.setBackground(new java.awt.Color(255, 195, 65));
         jbtnLimpar.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jbtnLimpar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/Limpar.png"))); // NOI18N
         jbtnLimpar.setText("Limpar");
         jbtnLimpar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -206,6 +208,7 @@ public class GUIAutor extends javax.swing.JInternalFrame {
 
         jbtnAlterar.setBackground(new java.awt.Color(255, 195, 65));
         jbtnAlterar.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jbtnAlterar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/Alterar.png"))); // NOI18N
         jbtnAlterar.setText("Alterar");
         jbtnAlterar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -215,6 +218,7 @@ public class GUIAutor extends javax.swing.JInternalFrame {
 
         jbtnDeletar.setBackground(new java.awt.Color(255, 195, 65));
         jbtnDeletar.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jbtnDeletar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/Deletar.png"))); // NOI18N
         jbtnDeletar.setText("Deletar");
         jbtnDeletar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -224,6 +228,7 @@ public class GUIAutor extends javax.swing.JInternalFrame {
 
         jbtnPreencher.setBackground(new java.awt.Color(255, 195, 65));
         jbtnPreencher.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jbtnPreencher.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/Preencher.png"))); // NOI18N
         jbtnPreencher.setText("Preencher");
         jbtnPreencher.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -257,7 +262,7 @@ public class GUIAutor extends javax.swing.JInternalFrame {
                 .addComponent(jbtnAlterar)
                 .addGap(18, 18, 18)
                 .addComponent(jbtnDeletar)
-                .addGap(79, 79, 79))
+                .addGap(41, 41, 41))
         );
         jLayeredPane1Layout.setVerticalGroup(
             jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -290,7 +295,7 @@ public class GUIAutor extends javax.swing.JInternalFrame {
                 .addContainerGap()
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 277, Short.MAX_VALUE)
+                .addComponent(jTabbedPane1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLayeredPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );

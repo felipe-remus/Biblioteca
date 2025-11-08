@@ -133,7 +133,7 @@ public class GUIEmprestimo extends javax.swing.JInternalFrame {
         setClosable(true);
         setIconifiable(true);
         setMaximizable(true);
-        setTitle("Empréstimo");
+        setTitle("Empréstimos");
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -336,6 +336,7 @@ public class GUIEmprestimo extends javax.swing.JInternalFrame {
 
         jbtnLimpar.setBackground(new java.awt.Color(255, 195, 65));
         jbtnLimpar.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jbtnLimpar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/Limpar.png"))); // NOI18N
         jbtnLimpar.setText("Limpar");
         jbtnLimpar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -350,6 +351,7 @@ public class GUIEmprestimo extends javax.swing.JInternalFrame {
 
         jbtnPreencher.setBackground(new java.awt.Color(255, 195, 65));
         jbtnPreencher.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jbtnPreencher.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/Preencher.png"))); // NOI18N
         jbtnPreencher.setText("Preencher");
         jbtnPreencher.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -359,6 +361,7 @@ public class GUIEmprestimo extends javax.swing.JInternalFrame {
 
         jbtnAlterar.setBackground(new java.awt.Color(255, 195, 65));
         jbtnAlterar.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jbtnAlterar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/Alterar.png"))); // NOI18N
         jbtnAlterar.setText("Alterar");
         jbtnAlterar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -368,6 +371,7 @@ public class GUIEmprestimo extends javax.swing.JInternalFrame {
 
         jbtnDeletar.setBackground(new java.awt.Color(255, 195, 65));
         jbtnDeletar.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jbtnDeletar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/Deletar.png"))); // NOI18N
         jbtnDeletar.setText("Deletar");
         jbtnDeletar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -377,6 +381,7 @@ public class GUIEmprestimo extends javax.swing.JInternalFrame {
 
         jbtnDevolver.setBackground(new java.awt.Color(255, 195, 65));
         jbtnDevolver.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jbtnDevolver.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/Devolver.png"))); // NOI18N
         jbtnDevolver.setText("Devolvido");
         jbtnDevolver.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -394,7 +399,7 @@ public class GUIEmprestimo extends javax.swing.JInternalFrame {
                 .addComponent(jTabbedPane1)
                 .addContainerGap())
             .addGroup(layout.createSequentialGroup()
-                .addGap(125, 125, 125)
+                .addGap(31, 31, 31)
                 .addComponent(jbtnCadastrar)
                 .addGap(18, 18, 18)
                 .addComponent(jbtnLimpar)

@@ -59,7 +59,7 @@ public class GUIMenuPrincipal extends javax.swing.JFrame implements InternalFram
     public GUIMenuPrincipal() {
         initComponents();
         
-        setIconImage(new javax.swing.ImageIcon(getClass().getResource("/img/Menu.png")).getImage());
+        //setIconImage(new javax.swing.ImageIcon(getClass().getResource("/img/Menu.png")).getImage());
         
         setExtendedState(MAXIMIZED_BOTH);
     }

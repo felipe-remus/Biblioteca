@@ -94,6 +94,7 @@ public class GUIEditora extends javax.swing.JInternalFrame {
 
         jbtnLimpar.setBackground(new java.awt.Color(255, 195, 65));
         jbtnLimpar.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jbtnLimpar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/Limpar.png"))); // NOI18N
         jbtnLimpar.setText("Limpar");
         jbtnLimpar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -108,6 +109,7 @@ public class GUIEditora extends javax.swing.JInternalFrame {
 
         jbtnAlterar.setBackground(new java.awt.Color(255, 195, 65));
         jbtnAlterar.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jbtnAlterar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/Alterar.png"))); // NOI18N
         jbtnAlterar.setText("Alterar");
         jbtnAlterar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -117,6 +119,7 @@ public class GUIEditora extends javax.swing.JInternalFrame {
 
         jbtnDeletar.setBackground(new java.awt.Color(255, 195, 65));
         jbtnDeletar.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jbtnDeletar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/Deletar.png"))); // NOI18N
         jbtnDeletar.setText("Deletar");
         jbtnDeletar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -126,6 +129,7 @@ public class GUIEditora extends javax.swing.JInternalFrame {
 
         jbtnPreencher.setBackground(new java.awt.Color(255, 195, 65));
         jbtnPreencher.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jbtnPreencher.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/Preencher.png"))); // NOI18N
         jbtnPreencher.setText("Preencher");
         jbtnPreencher.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -149,7 +153,7 @@ public class GUIEditora extends javax.swing.JInternalFrame {
         jLayeredPane1Layout.setHorizontalGroup(
             jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jLayeredPane1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap()
                 .addComponent(jbtnCadastrar)
                 .addGap(18, 18, 18)
                 .addComponent(jbtnLimpar)
@@ -159,7 +163,7 @@ public class GUIEditora extends javax.swing.JInternalFrame {
                 .addComponent(jbtnAlterar)
                 .addGap(18, 18, 18)
                 .addComponent(jbtnDeletar)
-                .addGap(70, 70, 70))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jLayeredPane1Layout.setVerticalGroup(
             jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -208,7 +212,7 @@ public class GUIEditora extends javax.swing.JInternalFrame {
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 676, Short.MAX_VALUE)
+            .addGap(0, 690, Short.MAX_VALUE)
             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel1Layout.createSequentialGroup()
                     .addGap(0, 0, Short.MAX_VALUE)
@@ -284,7 +288,7 @@ public class GUIEditora extends javax.swing.JInternalFrame {
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 676, Short.MAX_VALUE)
+            .addGap(0, 690, Short.MAX_VALUE)
             .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel2Layout.createSequentialGroup()
                     .addGap(0, 0, Short.MAX_VALUE)

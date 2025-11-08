@@ -65,6 +65,7 @@ public class GUILogin extends javax.swing.JFrame {
         jPanel.setBackground(new java.awt.Color(255, 195, 66));
 
         jbtnLogar.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
+        jbtnLogar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/Logar.png"))); // NOI18N
         jbtnLogar.setText("Logar");
         jbtnLogar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -127,7 +128,7 @@ public class GUILogin extends javax.swing.JFrame {
             .addGroup(jPanelLayout.createSequentialGroup()
                 .addGroup(jPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanelLayout.createSequentialGroup()
-                        .addContainerGap(403, Short.MAX_VALUE)
+                        .addContainerGap(367, Short.MAX_VALUE)
                         .addComponent(jbtnLogar)
                         .addGap(71, 71, 71)
                         .addComponent(jbtnCadastrar)

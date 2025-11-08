@@ -91,6 +91,7 @@ public class GUIGenero extends javax.swing.JInternalFrame {
 
         jbtnLimpar.setBackground(new java.awt.Color(255, 195, 66));
         jbtnLimpar.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jbtnLimpar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/Limpar.png"))); // NOI18N
         jbtnLimpar.setText("Limpar");
         jbtnLimpar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -105,6 +106,7 @@ public class GUIGenero extends javax.swing.JInternalFrame {
 
         jbtnAlterar.setBackground(new java.awt.Color(255, 195, 66));
         jbtnAlterar.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jbtnAlterar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/Alterar.png"))); // NOI18N
         jbtnAlterar.setText("Alterar");
         jbtnAlterar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -114,6 +116,7 @@ public class GUIGenero extends javax.swing.JInternalFrame {
 
         jbtnDeletar.setBackground(new java.awt.Color(255, 195, 66));
         jbtnDeletar.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jbtnDeletar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/Deletar.png"))); // NOI18N
         jbtnDeletar.setText("Deletar");
         jbtnDeletar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -123,6 +126,7 @@ public class GUIGenero extends javax.swing.JInternalFrame {
 
         jbtnPreencher.setBackground(new java.awt.Color(255, 195, 66));
         jbtnPreencher.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jbtnPreencher.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/Preencher.png"))); // NOI18N
         jbtnPreencher.setText("Preencher");
         jbtnPreencher.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -145,8 +149,8 @@ public class GUIGenero extends javax.swing.JInternalFrame {
         jLayeredPane1.setLayout(jLayeredPane1Layout);
         jLayeredPane1Layout.setHorizontalGroup(
             jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jLayeredPane1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(jLayeredPane1Layout.createSequentialGroup()
+                .addGap(39, 39, 39)
                 .addComponent(jbtnCadastrar)
                 .addGap(18, 18, 18)
                 .addComponent(jbtnLimpar)
@@ -156,7 +160,7 @@ public class GUIGenero extends javax.swing.JInternalFrame {
                 .addComponent(jbtnAlterar)
                 .addGap(18, 18, 18)
                 .addComponent(jbtnDeletar)
-                .addGap(73, 73, 73))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jLayeredPane1Layout.setVerticalGroup(
             jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -188,7 +192,7 @@ public class GUIGenero extends javax.swing.JInternalFrame {
                 .addContainerGap()
                 .addComponent(jLabel5)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jtfGenero, javax.swing.GroupLayout.DEFAULT_SIZE, 516, Short.MAX_VALUE)
+                .addComponent(jtfGenero, javax.swing.GroupLayout.DEFAULT_SIZE, 597, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -238,7 +242,7 @@ public class GUIGenero extends javax.swing.JInternalFrame {
                         .addGap(14, 14, 14)
                         .addComponent(jLabel11)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jtfPesquisar, javax.swing.GroupLayout.DEFAULT_SIZE, 597, Short.MAX_VALUE))
+                        .addComponent(jtfPesquisar, javax.swing.GroupLayout.DEFAULT_SIZE, 678, Short.MAX_VALUE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(jScrollPane1)))
@@ -276,7 +280,7 @@ public class GUIGenero extends javax.swing.JInternalFrame {
                 .addContainerGap()
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 277, Short.MAX_VALUE)
+                .addComponent(jTabbedPane1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLayeredPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );

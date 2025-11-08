@@ -365,7 +365,7 @@ public class GUICadManuLogin extends javax.swing.JInternalFrame {
                                 .addComponent(jLabel15)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jpfConfirmacao, javax.swing.GroupLayout.PREFERRED_SIZE, 500, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 128, Short.MAX_VALUE))))
+                        .addGap(0, 204, Short.MAX_VALUE))))
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addGap(27, 27, 27)
                 .addComponent(jcdMostrarSenha)
@@ -437,7 +437,7 @@ public class GUICadManuLogin extends javax.swing.JInternalFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 764, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 840, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel4Layout.createSequentialGroup()
                         .addComponent(jLabel11)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -476,6 +476,7 @@ public class GUICadManuLogin extends javax.swing.JInternalFrame {
 
         jbtnLimpar4.setBackground(new java.awt.Color(255, 195, 65));
         jbtnLimpar4.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jbtnLimpar4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/Limpar.png"))); // NOI18N
         jbtnLimpar4.setText("Limpar");
         jbtnLimpar4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -490,6 +491,7 @@ public class GUICadManuLogin extends javax.swing.JInternalFrame {
 
         jbtnRebaixar.setBackground(new java.awt.Color(255, 195, 65));
         jbtnRebaixar.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jbtnRebaixar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/Rebaixar.png"))); // NOI18N
         jbtnRebaixar.setText("Rebaixar Perfil");
         jbtnRebaixar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -499,6 +501,7 @@ public class GUICadManuLogin extends javax.swing.JInternalFrame {
 
         jbtnDeletar4.setBackground(new java.awt.Color(255, 195, 65));
         jbtnDeletar4.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jbtnDeletar4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/Deletar.png"))); // NOI18N
         jbtnDeletar4.setText("Deletar");
         jbtnDeletar4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -508,6 +511,7 @@ public class GUICadManuLogin extends javax.swing.JInternalFrame {
 
         jbtnPromover.setBackground(new java.awt.Color(255, 195, 65));
         jbtnPromover.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jbtnPromover.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/Promover.png"))); // NOI18N
         jbtnPromover.setText("Promover Perfil");
         jbtnPromover.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -536,19 +540,19 @@ public class GUICadManuLogin extends javax.swing.JInternalFrame {
                 .addComponent(jbtnRebaixar)
                 .addGap(18, 18, 18)
                 .addComponent(jbtnDeletar4)
-                .addGap(75, 75, 75))
+                .addGap(38, 38, 38))
         );
         jLayeredPane5Layout.setVerticalGroup(
             jLayeredPane5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jLayeredPane5Layout.createSequentialGroup()
-                .addGap(14, 14, 14)
+                .addContainerGap()
                 .addGroup(jLayeredPane5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jbtnCadastrar)
                     .addComponent(jbtnLimpar4)
                     .addComponent(jbtnRebaixar)
                     .addComponent(jbtnDeletar4)
                     .addComponent(jbtnPromover))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(14, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());

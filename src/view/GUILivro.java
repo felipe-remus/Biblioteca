@@ -398,6 +398,7 @@ public class GUILivro extends javax.swing.JInternalFrame {
 
         jbtnLimpar.setBackground(new java.awt.Color(255, 195, 66));
         jbtnLimpar.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jbtnLimpar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/Limpar.png"))); // NOI18N
         jbtnLimpar.setText("Limpar");
         jbtnLimpar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -412,6 +413,7 @@ public class GUILivro extends javax.swing.JInternalFrame {
 
         jbtnAlterar.setBackground(new java.awt.Color(255, 195, 66));
         jbtnAlterar.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jbtnAlterar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/Alterar.png"))); // NOI18N
         jbtnAlterar.setText("Alterar");
         jbtnAlterar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -421,6 +423,7 @@ public class GUILivro extends javax.swing.JInternalFrame {
 
         jbtnDeletar.setBackground(new java.awt.Color(255, 195, 66));
         jbtnDeletar.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jbtnDeletar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/Deletar.png"))); // NOI18N
         jbtnDeletar.setText("Deletar");
         jbtnDeletar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -430,6 +433,7 @@ public class GUILivro extends javax.swing.JInternalFrame {
 
         jbtnPreencher.setBackground(new java.awt.Color(255, 195, 66));
         jbtnPreencher.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jbtnPreencher.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/Preencher.png"))); // NOI18N
         jbtnPreencher.setText("Preencher");
         jbtnPreencher.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -458,19 +462,18 @@ public class GUILivro extends javax.swing.JInternalFrame {
                 .addComponent(jbtnAlterar)
                 .addGap(18, 18, 18)
                 .addComponent(jbtnDeletar)
-                .addGap(374, 374, 374))
+                .addGap(289, 289, 289))
         );
         jLayeredPane1Layout.setVerticalGroup(
             jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jLayeredPane1Layout.createSequentialGroup()
-                .addContainerGap()
                 .addGroup(jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jbtnCadastrar)
                     .addComponent(jbtnLimpar)
                     .addComponent(jbtnAlterar)
                     .addComponent(jbtnDeletar)
                     .addComponent(jbtnPreencher))
-                .addContainerGap(19, Short.MAX_VALUE))
+                .addGap(0, 25, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -491,7 +494,7 @@ public class GUILivro extends javax.swing.JInternalFrame {
                 .addContainerGap()
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 422, Short.MAX_VALUE)
+                .addComponent(jTabbedPane1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLayeredPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
