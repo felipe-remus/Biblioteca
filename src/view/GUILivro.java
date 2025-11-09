@@ -28,6 +28,9 @@ public class GUILivro extends javax.swing.JInternalFrame {
     private GUIMenuPrincipal menuPrincipal;
     private boolean modoCliente = false;
     
+    private Set<Integer> idsSelecionadosAutor = new HashSet<>();
+    private Set<Integer> idsSelecionadosGenero = new HashSet<>();
+    
     DefaultTableModel dtm = new DefaultTableModel(
         new Object[][]{},
         new String[]{"Nome","Edição", "Lançamento", "ISBN", "Editora", "Autor(s)", "Gênero(s)", "Quantidade"}
@@ -257,17 +260,22 @@ public class GUILivro extends javax.swing.JInternalFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel6)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jbtnAutor)
-                            .addComponent(jtfAutor)
-                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 500, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jLabel7)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(jtfAutor)
+                                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 500, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jLabel7))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jbtnAutor)
+                                .addGap(0, 0, Short.MAX_VALUE)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jbtnGenero)
-                            .addComponent(jtfGenero)
-                            .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 500, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(jtfGenero)
+                                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 500, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jbtnGenero))
                         .addGap(14, 14, 14)))
                 .addGap(25, 25, 25))
         );
@@ -303,14 +311,14 @@ public class GUILivro extends javax.swing.JInternalFrame {
                     .addComponent(jLabel7)
                     .addComponent(jtfGenero, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 59, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 95, Short.MAX_VALUE)
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jbtnAutor)
                     .addComponent(jbtnGenero))
-                .addContainerGap(73, Short.MAX_VALUE))
+                .addGap(31, 31, 31))
         );
 
         jTabbedPane1.addTab("Cadastro", jPanel1);
@@ -339,6 +347,9 @@ public class GUILivro extends javax.swing.JInternalFrame {
             }
         ));
         jScrollPane1.setViewportView(jtLivros);
+        if (jtLivros.getColumnModel().getColumnCount() > 0) {
+            jtLivros.getColumnModel().getColumn(2).setResizable(false);
+        }
 
         jcbDisponibilidade.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jcbDisponibilidade.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Todos", "Disponível", "Indisponível" }));
@@ -351,18 +362,19 @@ public class GUILivro extends javax.swing.JInternalFrame {
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(14, 14, 14)
-                .addComponent(jlPesquisa)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jtfPesquisar, javax.swing.GroupLayout.PREFERRED_SIZE, 500, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jcbTipoPesquisa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jcbDisponibilidade, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(402, Short.MAX_VALUE))
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane1)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(14, 14, 14)
+                        .addComponent(jlPesquisa)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jtfPesquisar)
+                        .addGap(18, 18, 18)
+                        .addComponent(jcbTipoPesquisa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jcbDisponibilidade, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1264, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
@@ -593,7 +605,6 @@ public class GUILivro extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(this, "Livro cadastrado com sucesso!");
 
             limpar();
-            preencherTabela();
 
         } catch (ParseException e) {
             JOptionPane.showMessageDialog(this, "Data inválida! Use dd/MM/yyyy");
@@ -636,7 +647,6 @@ public class GUILivro extends javax.swing.JInternalFrame {
             }
 
             jtLivros.setModel(dtm);
-
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Erro ao preencher tabela: " + e.getMessage());
         }
@@ -720,7 +730,7 @@ public class GUILivro extends javax.swing.JInternalFrame {
                 LivroServicos ls = ServicosFactory.getLivroServicos();
                 ls.deletarLivro(idLivro);
                 JOptionPane.showMessageDialog(this, "Livro excluído com sucesso!");
-                preencherTabela(); 
+                limpar();
             }
 
         } catch (Exception e) {
@@ -883,9 +893,6 @@ public class GUILivro extends javax.swing.JInternalFrame {
 
             limpar();
             idLivroEmEdicao = -1;
-
-            preencherTabela();
-
         } catch (ParseException e) {
             JOptionPane.showMessageDialog(this, "Data inválida! Use o formato dd/MM/yyyy.");
         } catch (Exception e) {
@@ -906,6 +913,10 @@ public class GUILivro extends javax.swing.JInternalFrame {
         dtm.setNumRows(0);
         jbtnAlterar.setEnabled(false);
         jbtnCadastrar.setEnabled(true);
+        idsSelecionadosAutor.clear();
+        idsSelecionadosGenero.clear();
+        jlAutor.clearSelection();
+        jlGenero.clearSelection();
         preencherTabela();
     }
 
@@ -919,7 +930,7 @@ public class GUILivro extends javax.swing.JInternalFrame {
 
             String query = "";
             if (!filtro.trim().isEmpty()) {
-                query = "WHERE nome_editora LIKE '%" + filtro.trim() + "%'";
+                query = "WHERE nome_editora LIKE '" + filtro.trim() + "%'";
             }
             ArrayList<EditoraVO> editoras = es.filtar(query); 
 
@@ -937,6 +948,12 @@ public class GUILivro extends javax.swing.JInternalFrame {
     
     private void carregarAutores(String filtro) {
         try {
+            // Armazenar IDs dos autores selecionados antes de recarregar
+            List<AutorVO> selecionadosAntes = new ArrayList<>(jlAutor.getSelectedValuesList());
+            for (AutorVO a : selecionadosAntes) {
+                idsSelecionadosAutor.add(a.getIdautor()); // ou outro campo único
+            }
+
             AutorServicos as = ServicosFactory.getAutorServicos();
             ArrayList<AutorVO> autores = as.filtrarAutor(filtro);
 
@@ -947,6 +964,16 @@ public class GUILivro extends javax.swing.JInternalFrame {
             jlAutor.setModel(model);
             jlAutor.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
 
+            // Limpar seleções atuais
+            jlAutor.clearSelection();
+
+            // Restaurar seleções com base nos IDs
+            for (int i = 0; i < model.getSize(); i++) {
+                AutorVO autorAtual = model.getElementAt(i);
+                if (idsSelecionadosAutor.contains(autorAtual.getIdautor())) {
+                    jlAutor.addSelectionInterval(i, i);
+                }
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -954,17 +981,33 @@ public class GUILivro extends javax.swing.JInternalFrame {
 
     private void carregarGeneros(String filtro) {
         try {
+            // Armazenar IDs dos gêneros selecionados antes de recarregar
+            List<GeneroVO> selecionadosAntes = new ArrayList<>(jlGenero.getSelectedValuesList());
+            idsSelecionadosGenero.clear();
+            for (GeneroVO g : selecionadosAntes) {
+                idsSelecionadosGenero.add(g.getIdgenero()); // ou outro campo único
+            }
+
             GeneroServicos gs = ServicosFactory.getGeneroServicos();
-            ArrayList<GeneroVO> generos = gs.filtarGenero(filtro); // ← só o texto!
+            ArrayList<GeneroVO> generos = gs.filtarGenero(filtro);
 
             DefaultListModel<GeneroVO> model = new DefaultListModel<>();
             for (GeneroVO g : generos) {
-                model.addElement(g); // ← objeto completo
+                model.addElement(g);
             }
-
-            jlGenero.setModel(model); // ← substitua "jListGenero" pelo nome real
-
+            jlGenero.setModel(model);
             jlGenero.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+
+            // Limpar seleções atuais
+            jlGenero.clearSelection();
+
+            // Restaurar seleções com base nos IDs
+            for (int i = 0; i < model.getSize(); i++) {
+                GeneroVO generoAtual = model.getElementAt(i);
+                if (idsSelecionadosGenero.contains(generoAtual.getIdgenero())) {
+                    jlGenero.addSelectionInterval(i, i);
+                }
+            }
 
         } catch (Exception e) {
             e.printStackTrace();

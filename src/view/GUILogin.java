@@ -231,6 +231,7 @@ public class GUILogin extends javax.swing.JFrame {
                 // 🔒 Mensagem genérica de segurança
                 JOptionPane.showMessageDialog(null, "Login, senha ou perfil inválidos.", 
                     "Erro de Autenticação", JOptionPane.ERROR_MESSAGE);
+                jpfSenha.setText("");
             }
         } catch (Exception e) {
             // 🔒 Também usa mensagem genérica em caso de erro

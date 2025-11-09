@@ -56,6 +56,7 @@ public class EditoraDAO {
             con.close();
         }
     }
+    
     public EditoraVO buscarEditoraPorId(int id_editora) throws SQLException {
         Connection con = new ConexaoBanco().getConexao();
         try {
@@ -98,6 +99,7 @@ public class EditoraDAO {
             con.close();
         }
     }
+    
     public void deletar (long id_editora) throws SQLException{
         Connection con = new ConexaoBanco().getConexao();
         

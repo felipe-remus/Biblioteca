@@ -80,6 +80,6 @@ public class EmprestimoServicos {
         if (diffDays <= 0) {
             return 0.0;
         }
-        return 5.0 + Math.max(0, diffDays - 1) * 1.0;
+        return 2.0 + Math.max(0, diffDays - 1) * 1.0;
     }
 }

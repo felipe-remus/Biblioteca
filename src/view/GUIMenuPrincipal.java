@@ -59,9 +59,22 @@ public class GUIMenuPrincipal extends javax.swing.JFrame implements InternalFram
     public GUIMenuPrincipal() {
         initComponents();
         
-        //setIconImage(new javax.swing.ImageIcon(getClass().getResource("/img/Menu.png")).getImage());
+        setIconImage(new javax.swing.ImageIcon(getClass().getResource("/img/Menu.png")).getImage());
         
         setExtendedState(MAXIMIZED_BOTH);
+        
+        if(SessaoUsuario.isCliente()){
+            jniCliente.setVisible(false);
+            jniAutor.setVisible(false);
+            jniDevolucao.setVisible(false);
+            jniEditora.setVisible(false);
+            jniEmprestimo.setVisible(false);
+            jniFuncionario.setVisible(false);
+            jniGenero.setVisible(false);
+            jniReserva.setVisible(false);
+            jMenu1.setVisible(false);
+            jmCadastro.setText("Cadastro e Pesquisa de Livros");
+        }
     }
     
     /**
